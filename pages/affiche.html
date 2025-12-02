@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Galerie des animaux pour élèves</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#4CAF50",
+              "background-light": "#F8F9FA",
+              "background-dark": "#102216",
+              "text-light": "#333333",
+              "text-dark": "#F8F9FA",
+              "surface-light": "#FFFFFF",
+              "surface-dark": "#1A2E21",
+              "accent": "#FF9800",
+            },
+            fontFamily: {
+              "display": ["Lexend", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full flex-col">
+<div class="flex h-full grow flex-col">
+<div class="flex flex-1 justify-center px-4 py-5 sm:px-8 md:px-16 lg:px-24">
+<div class="flex w-full max-w-7xl flex-col">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200/80 dark:border-gray-700/50 px-4 py-4 md:px-6">
+<div class="flex items-center gap-4 text-text-light dark:text-text-dark">
+<span class="material-symbols-outlined text-primary text-3xl">
+                                pets
+                            </span>
+<h2 class="text-xl font-bold leading-tight tracking-tight">Zoo Éducatif</h2>
+</div>
+<button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-primary/20 text-primary transition-colors hover:bg-primary/30">
+<span class="material-symbols-outlined">
+                                home
+                           </span>
+</button>
+</header>
+<main class="flex flex-col gap-6 p-4 md:p-6">
+<!-- PageHeading -->
+<div class="flex flex-wrap justify-between gap-4">
+<div class="flex min-w-72 flex-col gap-2">
+<p class="text-4xl font-black leading-tight tracking-tighter text-text-light dark:text-text-dark">Découvre les Animaux du Zoo</p>
+<p class="text-base font-normal leading-normal text-gray-500 dark:text-gray-400">Clique sur un animal pour en apprendre plus sur lui !</p>
+</div>
+</div>
+<!-- SearchBar and Chips -->
+<div class="flex flex-col gap-4">
+<div class="px-1 py-1">
+<label class="flex flex-col w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm">
+<div class="text-gray-400 dark:text-gray-500 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined">
+                                                search
+                                            </span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 pl-2 text-base font-normal leading-normal" placeholder="Rechercher un animal..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex gap-2 p-1 overflow-x-auto pb-3">
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-primary px-4 text-white shadow transition-transform hover:scale-105">
+<span class="material-symbols-outlined text-lg">
+                                        grid_view
+                                    </span>
+<p class="text-sm font-medium leading-normal">Tous</p>
+</button>
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark px-4 shadow-sm transition-colors hover:bg-gray-100 dark:hover:bg-white/10">
+<span class="material-symbols-outlined text-lg">
+                                        footprint
+                                    </span>
+<p class="text-sm font-medium leading-normal">Mammifères</p>
+</button>
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark px-4 shadow-sm transition-colors hover:bg-gray-100 dark:hover:bg-white/10">
+<span class="material-symbols-outlined text-lg">
+                                        flutter
+                                    </span>
+<p class="text-sm font-medium leading-normal">Oiseaux</p>
+</button>
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark px-4 shadow-sm transition-colors hover:bg-gray-100 dark:hover:bg-white/10">
+<span class="material-symbols-outlined text-lg">mouse</span>
+<p class="text-sm font-medium leading-normal">Reptiles</p>
+</button>
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark px-4 shadow-sm transition-colors hover:bg-gray-100 dark:hover:bg-white/10">
+<span class="material-symbols-outlined text-lg">
+                                        phishing
+                                    </span>
+<p class="text-sm font-medium leading-normal">Poissons</p>
+</button>
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark px-4 shadow-sm transition-colors hover:bg-gray-100 dark:hover:bg-white/10">
+<span class="material-symbols-outlined text-lg">
+                                        bug_report
+                                    </span>
+<p class="text-sm font-medium leading-normal">Insectes</p>
+</button>
+</div>
+</div>
+<!-- ImageGrid -->
+<div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-5">
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Photo d'un lion majestueux dans la savane">
+<img alt="Lion" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrxXP_qxENJV7OCSsQPfDHVmaJdMK0EPzXswtQNrdRMzXCXwUB2-mWQAgdGzG5ICfiiPL-99Psw5VYn9_N4gw1NobWh94_6Gy7dOGLE9aWfv9bQxfzHcsj4_TuIo-BKLQ-RSIwie8v85Vg-lE7ubr9W1e92T1AI2wukCmBxUEO8CNtuejM9k0oDXvIiR1vpptFkwjCbP8kQCnypICevKryo0Jplw35A_CTEZHUMnfm3TQcVOGoSy1O8LEISgD9NVaB5UEKIwKlsrM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Lion</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Une girafe se nourrissant des feuilles d'un arbre">
+<img alt="Girafe" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn1JKL41Gmc-2EcBCVYeBZ5Y_CdxjtuUVSt5SlJLUOS9tj7pm2aMFbNEiSyQWlP8ktt8mF0NFBQL5YrA_ck7VQ1ByFqNTNyBn4oZoPmAUdlkZ6x39Yr5RWfQweh4OA2j5j_IAx6nGH5Qc8DRUPEKgh5h_ac1bngrw6__LJq_jwFF2YPfgOCShH_fI0sVtijo-fWQT7jz_CHd48fHfYV4jxFXrZ6aylqQz7SSl70v0m2mjma3Ig7svkkHUWDEKqlLf53nViy_tsAFw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Girafe</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Un groupe de manchots empereurs sur la glace">
+<img alt="Manchot empereur" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_CdJnvllMUyo4Ssg-2OTNSCLW-qGGqlxv-iGHHxl4I-yLg0mzmRuD1V3EaOX6or0brFflDWA_s_RTmZihrvF4pmQqZk40P7kmSBM3M0QC8_yU0fH0mUxwZ2N4uEhnC_6j3iL9kW5B7EBQ82QLwybH69eDFWus4XvSFU_r0MRFqiR3mgW8nl6pnzRfniZQVm3oETQYe5nOWcSsQHWNLvvS4g4KR0ebPz7rcRty4YwrtOV1DtQNEy-GL3SFJcKX1S-nY8zDIBFD0Ik"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Manchot empereur</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Un tigre marchant dans la jungle">
+<img alt="Tigre" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD_SotOcitg50cHnKvBk2N4cmM6KAzEAUE7QEDkYgZP8YqV7th3cbBw9Ie2NCcyBFc6AfCB3Gz-x3wnDMwRIABIm9MxlU2c03FpZrqjDwN3F550K5Ts5z3QcPvW067ypXPrSotTPqtJo-c_O3ziowPeR4M6B22oBV6_XcoLGxvz4hEEaFZVQZT_1Wy-4nhfqxQoWF0PGngLNfSWqrPQfNZhqXYJikuI8NIL2AccCGfiHuQWV1RK4hCuoDI_qmi39zbmrYTi0iWN5s"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Tigre</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Un panda géant mangeant du bambou">
+<img alt="Panda Géant" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSRBDwLNBQqYWkzcTxNoJM6UUkURWYiNSRyDA5TDt5G5EVgyDgXcm8ENoU2U_MfbrY9K11a_zIqrPRJZV6s8F2qcbLdsTRk8Oac4dxm99r7bDls1zKcfdFeBuxDAJLUtKL4zopIFtg2ppaBpImH7n54Rg2tuwKfcbH-eZwwDKVfUg5AaiRp7B1znPkOGzyAaSGxgEaL9YVoNcDRI6yQ34LtOEhiQR6KFqdH7xUxu43-duB0sr3tNmcr7_R_hYEW1i6MDX-0ghRtV0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Panda Géant</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Un serpent corail coloré sur des feuilles mortes">
+<img alt="Serpent Corail" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfiu87XrCduQKuDTSQXGcmlRZK0P9S6P4TrH-AuwPHnnHf9Gh8RVeVUUgrMWZfgFbG1Tla1OfGV6DzCrWyadtC7zONcv7Vdu16Vu-CKYKzQbjCCFEA-orJX4_XanM9KZrUuGU-uSS_duZl978y8DTmLG0VHGwljU2gW1J-LJAmTILdZTVkay_TZoZd7b1AoMZ_9KQbho9kjVlgpBQ-PCgc1dnGrZhVTtdiArT7__eoDKFIWXEbJenA4jyUtRn3EXgXvDMOTx5Cz54"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Serpent Corail</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Un perroquet ara macao aux plumes vives perché sur une branche">
+<img alt="Ara Macao" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFaoMX9RrxBnM-YF6JhSmRiT89TDI5pxET5zRdx4zbCWVfnz4qLpq7iz0xCpXO88Y8JLV80X3e8v_kgjxTtWD8SE8CsOdhbZYg-pfvo3FcWV-2aT6DCUjdB67LnD6wOpCMIqhHk7tonnnJpC5FC6X_fLSMjelkWQwawxmRJYFKzS2s5hgmL7Zq2zkKaySck6z0q3VlG4bhKqZP73LcD3B7Hu4dAIYxV4YfuNhNYUNDt9KDWIUn0hFET6s4SGEplYqFTG7IBJ_Tlt4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Ara Macao</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Un poisson-clown nageant dans une anémone">
+<img alt="Poisson-Clown" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHUC-jvPBwRKmgO0in_XhtmNb3rp23qNl_b-v2eJQO1uLjcZ1mBGd8wlIJm7mXCIvrBKBVe3j6MVgbVWfvpZEwxeuT1fMvcrz27rsTg4bqDoui5OnrA1QOH_n-7WbZJWMZaypfK-Hnak4j4XrIiX37uoPJBa__K8VrdWEKY2TMT4KhiXb-uRz7KJ2KXCxLTOUAouq8j1HeLCMOXlSDiGORMoJ0hVJtPTF2AcdlkZqtijggoHOFRdwiQ3RoH8GpCn6ksAjWriUwhIE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Poisson-Clown</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Un éléphant d'Afrique avec ses grandes oreilles">
+<img alt="Éléphant d'Afrique" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8qTSQAsQ6aH_9_MMnsO4oCF_kQl1H9KFG1B26_69LlDdiNV4dbi_13Ea0SqZjnnquea5Olqoi2myszoQyegL3kDrp8f47C6qfoWVGIP2Oti1MEtn4u-DLUHRk_r5waPzoV_VYSJG_aUW5tk7fULAkSXTeHOc3S5H5MdyX1RPbD0cSvewEYJ17uwx3bEM3BR7HAdFbIWRg8AIA2WTSJ2EnwoOuHdiUetw9sYabtiVBo4qObukhypEFsrcTfEdAdD9n26DBtRnycf4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Éléphant d'Afrique</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Un zèbre avec ses rayures noires et blanches distinctives">
+<img alt="Zèbre" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC313HASL1fI7_JjMth5eRAhAJH9CDFl1HLgQv5bbJV0JA_lDILqEpPu9jYaKWbDdoQ_Kfagx1tO2_BrpdQwfxnxcDeiGOH9qqM_xa4AZE1xqoj1FWjGn9nA5-m_ihGD1HxiDuhEzltybHgCFLie0SE3iG0kVOjkm9SXpZGhEfFOPuGVaxeVq3yUQyl2hVlLanMSVoIGNP3jLNZqbCMLlpsbo2LHbOosGnV3uV6m4Liud8fR6seMFp6PbCsk8XY8qsNL_B0vHjSVRc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Zèbre</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Une tortue géante marchant lentement sur l'herbe">
+<img alt="Tortue Géante" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCbfXakQkPYNJsso4bGkmK8p_Z_ybDOoDJ10p0RivOH9UX9bjoHKor7OLdONSu2nftpRBnQHJoT7St0ah8tiyxDMveCGSPlX83O4QxU6d6WokCWGBUFxE8hKjHAZWH-Hs0MUcrQoTfCsKRcDWBINubwdJGKdhqUBHWcsVd33aPTEUxJZgPTQG5wNL2qgh_YfGt04ZXOIS4dhKKaCjSqfqQThISZ4WfTmwttsrDHoD0R-SfKPXdjILV6-Ww2ChrlwCaRE4o6MUtPLE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Tortue Géante</p>
+</div>
+<div class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg" data-alt="Un gorille au regard pensif dans la forêt">
+<img alt="Gorille" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgQuUYDPCHDMGv7Bqwzjm3-PXBYsbqI0I452eSRuRE2W2QuO5RGvINYB6MgQCqEKh8YIqSNrnz60-C-_uwDez5kqYnGPh5G8-1XOzmSy61xmmydt1oywy9z5MYA1RcDsk6bMsMjkS_DRabRbg3u4Urd9BaBYMKWy0mRTKBq-PzWRApoOB-RPRglhJr9b4OrIakPs4PdsCvWmmMZcaUTloUiYc_s3Q8nRB0VdFXRdZDz4wo52w2zFrFYSw-qh8ssWjrS8K4joP9fWw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<p class="absolute bottom-4 left-4 text-white text-lg font-bold leading-tight">Gorille</p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-auto border-t border-gray-200/80 dark:border-gray-700/50 py-6 px-4 md:px-6">
+<div class="text-center text-sm text-gray-500 dark:text-gray-400">
+<p>© 2024 Zoo Éducatif. Tous droits réservés.</p>
+<p class="mt-1">Un espace pour apprendre et découvrir le monde animal.</p>
+</div>
+</footer>
+</div>
+</div>
+</div>
+</div>
+</body></html>

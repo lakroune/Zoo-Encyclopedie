@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Écran de Paramètres (Changement de langue et plus)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "text-light": "#0d1b12",
+                        "text-dark": "#e8f9ed",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#162f1e",
+                        "muted-light": "#4c9a66",
+                        "muted-dark": "#94c7a6",
+                        "border-light": "#e7f3eb",
+                        "border-dark": "#2a4d37"
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full">
+<!-- SideNavBar -->
+<aside class="flex flex-col w-64 p-4 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark shrink-0">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="ZooManager application logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB6hd9xZmbEn-vHg60Myl50u7wk-GWyXNKhf-KULRnU8ZT9v2s1br6KPOz1Ok1IDF7Vzy_F77mRzTnPKB1BgrU8Rbsv0jw_gymWTCKIPAMV1Gx2OqFv2mlXLBMqkGi9xSjAi7p3wJMeFr7Bxb3Em64xNEUnPd18Opkv1TffHwHnNrARpyzhDYjfcRnVGiZazR1vMe8xHrcdHK27LOoGYriQsCfdAR0T-_dLZglu8OBgWYa514xDVbOzV-2gPQlYORBX1Xv-pEKMeDk");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-medium leading-normal text-text-light dark:text-text-dark">ZooManager</h1>
+<p class="text-sm font-normal leading-normal text-muted-light dark:text-muted-dark">Application Éducative</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10" href="#">
+<span class="material-symbols-outlined text-text-light dark:text-text-dark">dashboard</span>
+<p class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10" href="#">
+<span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
+<p class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Animaux</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10" href="#">
+<span class="material-symbols-outlined text-text-light dark:text-text-dark">forest</span>
+<p class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Habitats</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10" href="#">
+<span class="material-symbols-outlined text-text-light dark:text-text-dark">groups</span>
+<p class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Éducateurs</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20" href="#">
+<span class="material-symbols-outlined text-text-light dark:text-text-dark" style="font-variation-settings: 'FILL' 1;">settings</span>
+<p class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Paramètres</p>
+</a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-8 overflow-y-auto">
+<div class="max-w-4xl mx-auto">
+<!-- PageHeading -->
+<div class="flex flex-wrap items-center justify-between gap-3 mb-8">
+<h1 class="text-4xl font-black leading-tight tracking-[-0.033em] text-text-light dark:text-text-dark">Paramètres</h1>
+</div>
+<div class="space-y-10">
+<!-- Section: Language -->
+<div>
+<!-- SectionHeader -->
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 text-text-light dark:text-text-dark">Langue</h2>
+<!-- SegmentedButtons -->
+<div class="p-1 rounded-lg bg-border-light dark:bg-border-dark max-w-sm">
+<div class="flex h-10 items-center justify-center">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-[0.375rem] px-2 has-[:checked]:bg-surface-light dark:has-[:checked]:bg-surface-dark has-[:checked]:shadow-sm has-[:checked]:text-text-light dark:has-[:checked]:text-text-dark text-muted-light dark:text-muted-dark text-sm font-medium leading-normal transition-colors">
+<span class="truncate">Français</span>
+<input checked="" class="invisible w-0 h-0" name="language-selector" type="radio" value="Français"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-[0.375rem] px-2 has-[:checked]:bg-surface-light dark:has-[:checked]:bg-surface-dark has-[:checked]:shadow-sm has-[:checked]:text-text-light dark:has-[:checked]:text-text-dark text-muted-light dark:text-muted-dark text-sm font-medium leading-normal transition-colors">
+<span class="truncate">English</span>
+<input class="invisible w-0 h-0" name="language-selector" type="radio" value="English"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Section: Notifications -->
+<div>
+<!-- SectionHeader -->
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 text-text-light dark:text-text-dark">Notifications</h2>
+<div class="space-y-4 max-w-2xl">
+<!-- Toggle Switch -->
+<div class="flex items-center justify-between p-4 border rounded-xl border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">restaurant_menu</span>
+<div>
+<p class="font-medium text-text-light dark:text-text-dark">Activer les rappels d'alimentation</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">Recevez des notifications pour les heures de repas des animaux.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-border-light dark:bg-border-dark rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Dropdown -->
+<div class="flex items-center justify-between p-4 border rounded-xl border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">timer</span>
+<p class="font-medium text-text-light dark:text-text-dark">Fréquence des notifications</p>
+</div>
+<select class="bg-border-light dark:bg-border-dark border-none text-sm rounded-lg focus:ring-primary focus:border-primary block w-48 p-2.5 text-text-light dark:text-text-dark">
+<option selected="">Toutes les heures</option>
+<option value="daily">Quotidiennement</option>
+<option value="weekly">Hebdomadaire</option>
+<option value="never">Jamais</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Section: Audio & Visual -->
+<div>
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 text-text-light dark:text-text-dark">Son et Affichage</h2>
+<div class="space-y-4 max-w-2xl">
+<!-- Toggle Switch -->
+<div class="flex items-center justify-between p-4 border rounded-xl border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">volume_up</span>
+<div>
+<p class="font-medium text-text-light dark:text-text-dark">Activer les sons d'animaux</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">Entendez des effets sonores amusants en naviguant.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-border-light dark:bg-border-dark rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle Switch -->
+<div class="flex items-center justify-between p-4 border rounded-xl border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">contrast</span>
+<div>
+<p class="font-medium text-text-light dark:text-text-dark">Mode Contraste Élevé</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">Améliore la visibilité pour une meilleure accessibilité.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-border-light dark:bg-border-dark rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="flex justify-end pt-6">
+<button class="px-6 py-2.5 bg-primary text-background-dark font-semibold rounded-lg shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-background-light dark:focus:ring-offset-background-dark disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed" disabled="">
+                            Enregistrer les modifications
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

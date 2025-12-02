@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jeu des Animaux - Écran de jeu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f2cc0d",
+              "background-light": "#fcfbf8",
+              "background-dark": "#221f10",
+              "text-light": "#1c190d",
+              "text-dark": "#fcfbf8",
+              "border-light": "#f4f1e7",
+              "border-dark": "#3a3623",
+              "muted-light": "#e8e4ce",
+              "muted-dark": "#4c4832",
+            },
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"]
+            },
+            borderRadius: {
+                "DEFAULT": "1rem",
+                "lg": "1.5rem",
+                "xl": "2rem",
+                "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 sm:px-10 md:px-20 lg:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-4 sm:px-10 py-3">
+<div class="flex items-center gap-4 text-text-light dark:text-text-dark">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Jeu des Animaux</h2>
+</div>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-border-light dark:bg-border-dark text-text-light dark:text-text-dark gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5 hover:bg-muted-light dark:hover:bg-muted-dark transition-colors">
+<span class="material-symbols-outlined text-xl">
+                            home
+                            </span>
+</button>
+</header>
+<main>
+<h1 class="tracking-light text-[32px] font-bold leading-tight px-4 text-center pb-3 pt-6 text-text-light dark:text-text-dark">Écoute le son et trouve l'animal</h1>
+<div class="flex px-4 py-3 justify-center">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary text-text-light gap-2 text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-2xl">
+                                volume_up
+                                </span>
+<span class="truncate">Joue le son</span>
+</button>
+</div>
+<div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-4 p-4">
+<div class="flex flex-col gap-3 group">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl shadow-primary/30" data-alt="A lion roaring in the savanna" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVaknIq5Jw9BaIqEVIxQd-E5kgbJa-TEDXSIaHpnlfB4nDkQiRxvnOi3H8VpHb39fSBn7x8RFcEWRvuEmiPX33LEn2XNh1oAbpSFB1aVPdFSIkR7mKzlsZ24MiSAJW-FyeqioIkCgWNU33EC69KaJw3rw1WoUKGU15LBNtta0AswIpFP0uR0P2ef4BHusRHOXN9ZYeWX-Z-uBu3Y9EPhiHLUdfbz_7-anKAcHyYce3TBsoZfZ7RjDKJrffBJtoKcsrt5NI7PpaAUY");'></div>
+</div>
+<div class="flex flex-col gap-3 group">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl shadow-primary/30" data-alt="A colorful parrot perched on a branch" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBAoHEfWHJZodgivvVMcbxhTo4q4iSdcbkk20hgSXSwWhdDMtmBCyvhicYm6wH_ZGE8_nmos-sMateiCGDetma3GV59LefpMVHSZrRhYpSKCtUmHCNZhRxa0F0OQwKTCZ89KznlPFVEPnkZ5eeXBa8tYk9E1Z9Jh56bCrXyq1oooZAmQ9pM7LMdITHy5LMgMsj_LUqgvYsDDksEP6CXkDG8jqWb2eSSKRT3_2U8V7lbS9dDenOv4m2r-P9VAwsf8FWEIBAPRZIxclc");'></div>
+</div>
+<div class="flex flex-col gap-3 group">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl shadow-primary/30" data-alt="A monkey swinging from a tree" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC-pwEBu0jSbFfNZu3xe_leQIigD4TUfYfWZdE1wJ2_A-i0IUQJpP_IBdNQUxWXgJlq42yPVYY_EMUrbVArQTPFVoxSAO4FI43GBxihXN7rXcmj2UTPnA4JbblcrKlKQWZsV_cTAZ7PFExMEiBs9pYwhR5BiYpOvZ8QvAYH5ggem2u4WVoqk0F2Bw3qaJX1J7NMHZMGU3NrzEz7-xBzfY49K--RjhsUk3yWbd1kczFn3VOtUTfDhd4t3EF-UhB0aTXj73yQr2_M0GY");'></div>
+</div>
+<div class="flex flex-col gap-3 group">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl shadow-primary/30" data-alt="An elephant drinking water from a lake" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAopveXJRemPA1K_kUgqKUWkikidFirvdLsi3f9aKDXADSEPzZ6MA5WfoxQuZAeCMVgu8TcUi_adpj28A7UsL275KkLjZ_TbOMv8Z5I3uP9-9z6fE9DkKLwugf3XtTFaJO0YPwzHayxIQirvOhND3nT8QQLOYC-Zl1SQ_FBtNav_5v4wxgH6lWu_IbIESppQEdYGtV2tCiIy9PA49nPXpEiAKIPTSBmQEWMyFhwtvI-apw_tpgLrruIUtnsSBsa-9VmY-CD8lYBS-Q");'></div>
+</div>
+<div class="flex flex-col gap-3 group">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl shadow-primary/30" data-alt="A sleepy panda chewing on bamboo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDg-v8Gjae2eVYrysBvgx3E-1i2o4fK5OyE6H7wGy4YG6RNU3en1CPdS9aXyUzvRHjs3G0GsJ_42BjeC0TkTfLocEo_JRXAflz9UY1N9sfmwKZgi0VyhCg8aWrebUrzm6HGP3WTWk2Hk9DMSNIyNerm8TTAkChnQQofDxQ1sTUe3vRxuRPDAtn3LED_oUzhbjyvMWy8tdc6TscOGbKxJm4VtDEKshcfMwYY-s0AuvtOovUvoslmkRijciTTb6m9P6zx-R-GrKFSdWM");'></div>
+</div>
+<div class="flex flex-col gap-3 group">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl shadow-primary/30" data-alt="A majestic wolf howling at the moon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAIKhfJeuM4qTol-jlbAVk3nwzeUv1OLTI5z67W8g4NxPWNnD4oOyzNy3HstfGfSRPslSSvx_ayiVaVBuA-zhFMnf25nI6KnQbq1HxNpNlmTHZUrTOdGCCXkKzpENP9HY6pg6L_hX_BZZfeT3oxDnanSHVheWesXI52d8RUpR_Mq6kAAe8lCqIWboH8oGq2q4VGjaWXRZ_W_anrbuOo0bnJtlj9znsKYDVkRS3HaH_GFLVWvRmTfAHu6KExrjzePubNEaFdxciw3wI");'></div>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4">
+<div class="flex gap-6 justify-between"><p class="text-base font-medium leading-normal text-text-light dark:text-text-dark">Progression</p></div>
+<div class="rounded-full bg-muted-light dark:bg-muted-dark"><div class="h-2 rounded-full bg-primary" style="width: 33%;"></div></div>
+</div>
+</main>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Formulaire Animal (Ajout/Modification) amélioré</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#3A5A40",
+            "background-light": "#f6f8f6",
+            "background-dark": "#102216",
+            "primary-light": "#DAD2BC",
+            "primary-dark": "#2a3d2e",
+            "text-light": "#333333",
+            "text-dark": "#e0e0e0",
+            "accent": "#F9A826"
+          },
+          fontFamily: {
+            "display": ["Lexend", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.5em 1.5em;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB8CzvyKE2bbSs_08FBBXqvgEXYnLgEdxCNG1erkatbi19C9TpPMdJsIb1biiWExbgzytNNaJ_SqMWUZ2oUnWIZYVy9QY2uK03zwMtiix4y6VmkrjncENAPHmktRswIRA6Rks6ryOn1WX-J8GJ3kiZVIUDjgLkJ9EV3QyHyYnHrLYsNggQcR3vKg057jzZWRp3KAf_RK3ra_1w0aA4iY9H5wdceYG2e1IsJnvpVRtcehQTdJDCcZyysOLrIfTpV1Ht0V0UYlDtg8rc)
+    }
+.dark select {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB8CzvyKE2bbSs_08FBBXqvgEXYnLgEdxCNG1erkatbi19C9TpPMdJsIb1biiWExbgzytNNaJ_SqMWUZ2oUnWIZYVy9QY2uK03zwMtiix4y6VmkrjncENAPHmktRswIRA6Rks6ryOn1WX-J8GJ3kiZVIUDjgLkJ9EV3QyHyYnHrLYsNggQcR3vKg057jzZWRp3KAf_RK3ra_1w0aA4iY9H5wdceYG2e1IsJnvpVRtcehQTdJDCcZyysOLrIfTpV1Ht0V0UYlDtg8rc)
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="flex min-h-screen">
+<aside class="flex w-64 flex-col bg-white p-4 dark:bg-primary-dark">
+<div class="mb-8 flex items-center gap-3 px-2">
+<span class="material-symbols-outlined rounded-full bg-primary p-2 text-2xl text-white">
+          pets
+        </span>
+<span class="text-xl font-bold text-primary dark:text-primary-light">ZooManager</span>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary/80 transition-colors hover:bg-primary/10 dark:text-primary-light/80 dark:hover:bg-primary-light/10" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Tableau de bord</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 font-bold text-primary transition-colors hover:bg-primary/10 dark:bg-primary-light/20 dark:text-primary-light" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-medium">Animaux</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary/80 transition-colors hover:bg-primary/10 dark:text-primary-light/80 dark:hover:bg-primary-light/10" href="#">
+<span class="material-symbols-outlined">fence</span>
+<span class="font-medium">Habitats</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary/80 transition-colors hover:bg-primary/10 dark:text-primary-light/80 dark:hover:bg-primary-light/10" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-medium">Éducation</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary/80 transition-colors hover:bg-primary/10 dark:text-primary-light/80 dark:hover:bg-primary-light/10" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Paramètres</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-primary/80 transition-colors hover:bg-primary/10 dark:text-primary-light/80 dark:hover:bg-primary-light/10" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-medium">Déconnexion</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-6 lg:p-10">
+<div class="mx-auto w-full max-w-4xl">
+<div class="mb-8">
+<h1 class="text-3xl font-black text-primary dark:text-primary-light sm:text-4xl">Gérer l'animal</h1>
+<p class="mt-2 text-base text-gray-600 dark:text-gray-300">Ajoutez ou modifiez les informations d'une créature du zoo.</p>
+</div>
+<div class="rounded-xl bg-white p-6 shadow-sm dark:bg-primary-dark sm:p-8 md:p-10">
+<form class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
+<div class="md:col-span-2">
+<label class="flex flex-col" for="animal-name">
+<span class="pb-2 text-base font-medium">Nom de l'animal</span>
+<input class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 text-base font-normal placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:placeholder:text-gray-400 dark:focus:border-accent" id="animal-name" placeholder="Par exemple, Léo le Lion" value=""/>
+</label>
+</div>
+<div>
+<label class="flex flex-col" for="diet">
+<span class="pb-2 text-base font-medium">Régime alimentaire</span>
+<div class="relative">
+<select class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 pr-10 text-base font-normal focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:focus:border-accent" id="diet">
+<option value="">Sélectionnez un régime</option>
+<option value="carnivore">Carnivore</option>
+<option value="herbivore">Herbivore</option>
+<option value="omnivore">Omnivore</option>
+</select>
+</div>
+</label>
+</div>
+<div>
+<label class="flex flex-col" for="habitat">
+<span class="pb-2 text-base font-medium">Habitat naturel</span>
+<div class="relative">
+<select class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 pr-10 text-base font-normal focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:focus:border-accent" id="habitat">
+<option value="">Sélectionnez un habitat</option>
+<option value="savane">Savane</option>
+<option value="jungle">Jungle</option>
+<option value="desert">Désert</option>
+<option value="ocean">Océan</option>
+<option value="foret">Forêt</option>
+</select>
+</div>
+</label>
+</div>
+<div class="md:col-span-2">
+<label class="pb-2 text-base font-medium" for="animal-photo">Photo de l'animal</label>
+<div class="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg border-2 border-dashed border-gray-300 px-6 py-10 transition-colors hover:border-primary dark:border-gray-600 dark:hover:border-accent">
+<span class="material-symbols-outlined text-4xl text-primary dark:text-primary-light">
+                            cloud_upload
+                        </span>
+<div class="flex max-w-md flex-col items-center gap-1 text-center">
+<p class="text-base font-bold text-gray-700 dark:text-gray-200">Cliquez ou glissez-déposez une photo</p>
+<p class="text-sm font-normal text-gray-500 dark:text-gray-400">PNG, JPG, GIF jusqu'à 10Mo</p>
+</div>
+<input class="absolute inset-0 h-full w-full cursor-pointer opacity-0" id="animal-photo" type="file"/>
+</div>
+</div>
+<div class="mt-6 flex flex-col-reverse items-center gap-4 border-t border-gray-200 pt-6 dark:border-gray-700 md:col-span-2 md:flex-row md:justify-end">
+<button class="h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-transparent px-6 text-base font-bold text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 md:w-auto" type="button">
+                  Annuler
+                </button>
+<button class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:bg-accent dark:text-primary dark:hover:bg-accent/90 dark:focus:ring-accent/50 md:w-auto" type="submit">
+<span class="material-symbols-outlined">save</span>
+                  Enregistrer
+                </button>
+</div>
+</form>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

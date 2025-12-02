@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestion des animaux avec navigation et filtres</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2c20",
+                        "text-light-primary": "#0d1b12",
+                        "text-dark-primary": "#f0f0f0",
+                        "text-light-secondary": "#4c9a66",
+                        "text-dark-secondary": "#a2d8b4",
+                        "border-light": "#e7f3eb",
+                        "border-dark": "#2c4033",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex min-h-screen w-full">
+<aside class="sticky top-0 flex h-screen w-64 flex-col justify-between border-r border-border-light bg-card-light p-4 dark:border-border-dark dark:bg-card-dark">
+<div>
+<div class="flex items-center gap-3 p-2">
+<div class="aspect-square h-10 w-10 rounded-full bg-cover bg-center bg-no-repeat" data-alt="Zoo Manager application logo with a stylized paw print" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0Lg1OEXJcVVLNu-F6WdrhKg3x_oITAykEs4sv1tonbmxNuSYelzNpbTz0uZeDE9pn5C1fVmaHtkBsSZswb9MqE4bPkadWEdAXoShGf6e9VFYxd2HUxueX0eXHhOxmEmwV81zxkOeXGuTh_FHL-eM-5x7tof3w167DposoHSNPe5IY9s-L-g1NpZN-optSF_VH8WfQOdshKb6i8QxLM0StObMwydCAiXrkhFc1W8izSSSn34g7N28pr0md3jJqxSnH434lfcrFMF8");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-medium leading-normal text-text-light-primary dark:text-text-dark-primary">Zoo Manager</h1>
+<p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">Application de Gestion</p>
+</div>
+</div>
+<nav class="mt-8 flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-light-primary hover:bg-border-light dark:text-text-dark-primary dark:hover:bg-border-dark" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Tableau de bord principal</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/20 px-3 py-2 text-text-light-primary dark:text-text-dark-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pets</span>
+<p class="text-sm font-medium leading-normal">Gestion des animaux</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-light-primary hover:bg-border-light dark:text-text-dark-primary dark:hover:bg-border-dark" href="#">
+<span class="material-symbols-outlined">forest</span>
+<p class="text-sm font-medium leading-normal">Gestion des habitats</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-light-primary hover:bg-border-light dark:text-text-dark-primary dark:hover:bg-border-dark" href="#">
+<span class="material-symbols-outlined">bar_chart_4_bars</span>
+<p class="text-sm font-medium leading-normal">Statistiques</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-light-primary hover:bg-border-light dark:text-text-dark-primary dark:hover:bg-border-dark" href="#">
+<span class="material-symbols-outlined">joystick</span>
+<p class="text-sm font-medium leading-normal">Jeu animalier</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-light-primary hover:bg-border-light dark:text-text-dark-primary dark:hover:bg-border-dark" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Paramètres</p>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-8">
+<div class="mx-auto max-w-7xl">
+<header class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-4xl font-black leading-tight tracking-[-0.033em] text-text-light-primary dark:text-text-dark-primary">Gestion des Animaux</h1>
+<p class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">Gérez tous les animaux de votre zoo en un seul endroit.</p>
+</div>
+<button class="flex h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold leading-normal tracking-[0.015em] text-text-light-primary sm:flex">
+<span class="material-symbols-outlined">add</span>
+<span class="truncate">Ajouter un Animal</span>
+</button>
+</header>
+<div class="mt-8 flex flex-col gap-4 md:flex-row md:items-center">
+<div class="flex-grow">
+<label class="flex h-12 w-full min-w-40 flex-col">
+<div class="flex h-full w-full flex-1 items-stretch rounded-lg">
+<div class="flex items-center justify-center rounded-l-lg border-y border-l border-border-light bg-card-light pl-4 text-text-light-secondary dark:border-border-dark dark:bg-card-dark dark:text-text-dark-secondary">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input h-full w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg border border-border-light bg-card-light pl-2 text-base font-normal leading-normal text-text-light-primary placeholder:text-text-light-secondary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary dark:placeholder:text-text-dark-secondary" placeholder="Rechercher un animal..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-wrap gap-4">
+<div class="flex-1">
+<label class="sr-only" for="habitat-filter">Filtrer par Habitat</label>
+<select class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary" id="habitat-filter">
+<option selected="">Tout Habitat</option>
+<option>Savane</option>
+<option>Jungle</option>
+<option>Désert</option>
+<option>Océan</option>
+</select>
+</div>
+<div class="flex-1">
+<label class="sr-only" for="diet-filter">Filtrer par Type alimentaire</label>
+<select class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary" id="diet-filter">
+<option selected="">Tout Type Alimentaire</option>
+<option>Carnivore</option>
+<option>Herbivore</option>
+<option>Omnivore</option>
+</select>
+</div>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6">
+<div class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
+<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat" data-alt="A majestic lion with a golden mane resting in a savanna environment." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAVdvk1_GXjcKzFlkJ546C4okoGsTWfU8Ak_p2bt-WegNa1jYdit9G0YWeU8SQSE6beExRy9gWZQo2qfFJmDXNS1nPgsCJiag4cZyPCiuvhcUjGcAKNAj_DxmjEcwUh2FH05Ah7RJVR8w94oKY8Un7blroMLWC_jK3LksM71Cd2Liyzgk8tLpsLCc1VF-rBM3y-ruGHm-woY1BkFzq-DUd_jbog_lJW_HfJVQULK9Ke8xYpp6ooyhN9fRUKsf1G7zilzepLAFT1lAo");'>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span class="material-symbols-outlined text-base">edit</span></button>
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span class="material-symbols-outlined text-base">delete</span></button>
+</div>
+</div>
+<div>
+<p class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">Léo le Lion</p>
+<div class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">grass</span>Savane</span>
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">restaurant</span>Carnivore</span>
+</div>
+</div>
+</div>
+<div class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
+<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat" data-alt="A tall giraffe with distinctive spots eating leaves from a tree." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB6q7Sfv_sCfzPGY0PjawSOHLvnTjA1POc8hJ4kKO4hJDj9lale19AkRr9vldAibuvZl3woNDWNui9MTgewuqrILV647ipV3AHia8ne_xIRE4VhaYlvPU2akRK63O8rWSMdYywsEtN7EVL3vZoN9_y4rCMTbJlnVeEJuChD7-rUHPGYqZUyJEWc7ZoYsTO_DXQEa6Hf7xfUGFhK3WQkSGkQeu-vYRY9Fsi_CINvGYDTXm-ZGZALCWcGSu55VoAD8iYJZfg6liVHCR0");'>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span class="material-symbols-outlined text-base">edit</span></button>
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span class="material-symbols-outlined text-base">delete</span></button>
+</div>
+</div>
+<div>
+<p class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">Gigi la Girafe</p>
+<div class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">grass</span>Savane</span>
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">eco</span>Herbivore</span>
+</div>
+</div>
+</div>
+<div class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
+<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat" data-alt="A large crocodile partially submerged in murky jungle water." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBaE5ilhrOOlropJlJo3nzKf_8xEWmU3F3_BvoLQetHkIx8cfA7by7nyna2osbhBRv_MUIKUrlnHTjZ47O-dP9qlpTFCAjZnjV_2VZJdSdu3Cp-_Auwitl6P1HAcidJZd0TpkvJWweQ3aVg_lBjvrRRCT8KvyGB4H5gyBj2RNhFR9iWwG8pBU_1t0EyBJU9EgkGyqStYgMF6Ixpvk2Vmyd6mGL_HVsmmdjxDeIBdd6AT5UNvqieiVAeUYmwBo6FbnhEierxG0d7JYc");'>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span class="material-symbols-outlined text-base">edit</span></button>
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span class="material-symbols-outlined text-base">delete</span></button>
+</div>
+</div>
+<div>
+<p class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">Coco le Crocodile</p>
+<div class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">forest</span>Jungle</span>
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">restaurant</span>Carnivore</span>
+</div>
+</div>
+</div>
+<div class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
+<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat" data-alt="A zebra with striking black and white stripes in a grassy field." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAcxDky46YhSd4lp5GrM9pb0wrCkRyg9ZUtPaomviMiP87zTF8uPsoXaVvxlyOCPBlYBoUAEdbMhYXkGW_qH-ejgGjuKP1LEp_ORSySmCRJs0PpseDPsRC97-Sn-fbwn1e4ro66tcks_cOlacoTYAYbE6Zq22NyFdE63p0OID_wqm2M88fapGb8TedJaJWY1pecDyT8oamz-QZG-GIiC-RTON1YZZ4r8mN3rv_eNQ3lFvMxH15VuALjFjBwQxI9TOTx_Rb7v3fRCIw");'>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span class="material-symbols-outlined text-base">edit</span></button>
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span class="material-symbols-outlined text-base">delete</span></button>
+</div>
+</div>
+<div>
+<p class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">Zoe le Zèbre</p>
+<div class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">grass</span>Savane</span>
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">eco</span>Herbivore</span>
+</div>
+</div>
+</div>
+<div class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
+<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat" data-alt="A playful monkey swinging from a vine in a lush jungle." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2LfDyb2dajUEQit8oUEIxLoqh1ZvtJ-c07ZJF7rGjaV_S1EW3egIYAcEFWoS54tjNPVSXgvPnlZ8QTGNmOZb69gX71AZ3TUDoZcRkEM1jXl5yskbzy0JLyWwsu4UXK1namZ6_3fSQrKiEd3Wnvr2B6z2eDzFW-DztIt5iRR2W_jRwBWYpoEquQ7zCEJQXfhQ3iBNlCNkmRo4Ii793WNsUt3TEXrg3ubjnBClBBe99mpPDw6DGd6SFQtm7I4RtMPmL5baiIW0niFg");'>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span class="material-symbols-outlined text-base">edit</span></button>
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span class="material-symbols-outlined text-base">delete</span></button>
+</div>
+</div>
+<div>
+<p class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">Milo le Singe</p>
+<div class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">forest</span>Jungle</span>
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">lunch_dining</span>Omnivore</span>
+</div>
+</div>
+</div>
+<div class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
+<div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat" data-alt="A cute penguin waddling on an icy arctic landscape." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDMwfcu4zJOoHsdabVtaTuMVv_gwsHM5OAz0HpJfrxINfJeaAjDJ6cwaNu3CvYDrBBhu8fr9PEDHMWooJUdJO3nkaKlLowucOrTfjktxnF_pA84J_FKkqfAWPHWOJf-ZevD1n3R0khYaqo4NfgZWRCl9HNeBAI6NrpqRxt29phoUrOU1RTpPawdv45Fq8iEO0nGOdT1ZeIhqi7YQPgeUt8QVfvjXkYqbozNYPw7MxeucpPdeeI1ehAftbb4TImYD5VpraXQLlcT7ek");'>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span class="material-symbols-outlined text-base">edit</span></button>
+<button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span class="material-symbols-outlined text-base">delete</span></button>
+</div>
+</div>
+<div>
+<p class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">Pipa le Pingouin</p>
+<div class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">ac_unit</span>Arctique</span>
+<span class="flex items-center gap-1 text-sm"><span class="material-symbols-outlined text-base">restaurant</span>Carnivore</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
