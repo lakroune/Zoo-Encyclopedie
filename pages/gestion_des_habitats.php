@@ -2,7 +2,9 @@
 include "db_connect.php";
 
 $action = "php/ajouter_habitat.php";
- 
+
+$hidden = "hidden";
+$nameHab = "";
 $descriptionHab = '';
 $idHab = 0;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
@@ -15,7 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
   try {
     $resultat = $cennect->query($sql);
     $habitat_modify = $resultat->fetch_assoc();
-     
+    $nameHab =   $habitat_modify['NomHab'];
+    $descriptionHab =  $habitat_modify['Description_Hab'];
+    $url_image =  $habitat_modify['Url_image'];
   } catch (Exception $e) {
     print('Erreur de connexion à la base de données.');
   }
