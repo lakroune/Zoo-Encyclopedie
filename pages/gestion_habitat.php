@@ -1,3 +1,12 @@
+<?php
+include "db_connect.php";
+ 
+
+$sql = " select * from  habitat";
+$resultat = $cennect->query($sql);
+$array_habitat = $resultat->fetch_all();
+
+?>
 <!DOCTYPE html>
 <html class="light" lang="fr"><head>
 <meta charset="utf-8"/>
