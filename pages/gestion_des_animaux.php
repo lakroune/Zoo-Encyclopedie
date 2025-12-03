@@ -1,3 +1,62 @@
+<?php
+include "db_connect.php";
+
+
+$action = "php/ajouter_animal.php";
+
+$hidden = "hidden";
+$NomAnimal = "";
+$Url_image = "";
+$descriptionAnimal = '';
+$IdAnimal = 0;
+$typeRegime="";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['IdAnimal'])) {
+    $hidden = "block";
+    $IdAnimal = (int)$_POST['IdAnimal'];
+    $action = "php/modifier_animal.php?IdAnimal=" . $IdAnimal;
+
+    $sql = " select * from  animal where IdAnimal= " . $IdAnimal;
+
+    try {
+        $resultat = $cennect->query($sql);
+        $animal_modify = $resultat->fetch_assoc();
+        $NomAnimal =   $animal_modify['NomAnimal'];
+        $url_image =   $animal_modify['Url_image'];
+        $descriptionAnimal =  $animal_modify['Description_animal'];
+        $typeRegime=  $animal_modify['Type_alimentaire'];
+    } catch (Exception $e) {
+        print('Erreur de connexion à la base de données.');
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($_POST["type-Alimentaire"]) || isset($_POST["Habitat"]) || $_POST['search'])) {
+
+    if ($_POST["type-Alimentaire"] == "Tout-Type-Alimentaire"  && $_POST["Habitat"] == "Tout Habitat") {
+        $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a , habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%'";
+    } else 
+    if ($_POST["type-Alimentaire"] != "Tout-Type-Alimentaire"  && $_POST["Habitat"] == "Tout Habitat") {
+        $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a ,
+         habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%' and a.Type_alimentaire='" . $_POST["type-Alimentaire"] . "'";
+    } else
+
+    if ($_POST["type-Alimentaire"] == "Tout-Type-Alimentaire"  && $_POST["Habitat"] != "Tout Habitat") {
+        $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a ,
+         habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%' and a.IdHab='" . $_POST["Habitat"] . "'";
+    } else   $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a ,
+         habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%' and a.IdHab='" . $_POST["Habitat"] . "'
+          and a.Type_alimentaire='" . $_POST["type-Alimentaire"] . "'";
+    $resultat = $cennect->query($sql);
+    $array_animal = $resultat->fetch_all();
+}
+?>
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html class="light" lang="fr">
 
@@ -46,10 +105,11 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body class="font-display bg-background-light dark:bg-background-dark">
-    <div class="relative flex min-h-screen w-full">
+    <div class="relative flex h-auto min-h-screen w-full group/design-root ">
         <aside
             class="flex h-screen w-64 flex-col justify-between border-r border-border-light bg-foreground-light p-4 dark:border-border-dark dark:bg-foreground-dark sticky top-0">
             <div class="flex flex-col gap-2">
@@ -68,32 +128,33 @@
                     </div>
                 </div>
                 <nav class="mt-4 flex flex-col gap-1">
-                    <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20" href="#">
+                    <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+                        href="index.php">
                         <span class="material-symbols-outlined text-text-light dark:text-text-dark"
                             style="font-variation-settings: 'FILL' 1;">dashboard</span>
                         <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Tableau
                             de bord</span>
                     </a>
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30"
-                        href="#">
+                        href="gestion_des_animaux.php">
                         <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
                         <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
                             animaux</span>
                     </a>
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-                        href="#">
+                        href="gestion_des_habitats.php">
                         <span class="material-symbols-outlined text-text-light dark:text-text-dark">eco</span>
                         <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
                             habitats</span>
                     </a>
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-                        href="#">
+                        href="Statistiques.php">
                         <span class="material-symbols-outlined text-text-light dark:text-text-dark">bar_chart</span>
                         <span
                             class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Statistiques</span>
                     </a>
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-                        href="#">
+                        href="jeux.php">
                         <span class="material-symbols-outlined text-text-light dark:text-text-dark">joystick</span>
                         <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Jeu
                             animalier</span>
@@ -109,236 +170,267 @@
                 </a>
             </div>
         </aside>
-        <main class="flex-1 p-8">
-            <div class="mx-auto max-w-7xl">
-                <header class="flex flex-wrap items-center justify-between gap-4">
-                    <div class="flex flex-col gap-1">
-                        <h1
-                            class="text-4xl font-black leading-tight tracking-[-0.033em] text-text-light-primary dark:text-text-dark-primary">
-                            Tableau de bord des Animaux</h1>
-                        <p
-                            class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
-                            Gérez tous les animaux de votre zoo en un seul endroit.</p>
-                    </div>
-                    <button
-                        class="hidden h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold leading-normal tracking-[0.015em] text-text-light-primary sm:flex">
-                        <span class="material-symbols-outlined">add</span>
-                        <span class="truncate">Ajouter un Animal</span>
-                    </button>
-                </header>
-                <div class="mt-8 flex flex-col gap-4 md:flex-row md:items-center">
-                    <div class="flex-grow">
-                        <label class="flex h-12 w-full min-w-40 flex-col">
-                            <div class="flex h-full w-full flex-1 items-stretch rounded-lg">
-                                <div
-                                    class="flex items-center justify-center rounded-l-lg border-y border-l border-border-light bg-card-light pl-4 text-text-light-secondary dark:border-border-dark dark:bg-card-dark dark:text-text-dark-secondary">
-                                    <span class="material-symbols-outlined">search</span>
+        <div class="flex-1 flex flex-col">
+
+            <main class="flex-1 p-4 sm:p-6 lg:p-8 position : relative">
+                <div class="mx-auto max-w-7xl   position : relative ">
+                    <header class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex flex-col gap-1">
+                            <h1
+                                class="text-4xl font-black leading-tight tracking-[-0.033em] text-text-light-primary dark:text-text-dark-primary">
+                                Tableau de bord des Animaux</h1>
+                            <p
+                                class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
+                                Gérez tous les animaux de votre zoo en un seul endroit.</p>
+                        </div>
+                        <button id="ajouter-animal"
+                            class="hidden h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold leading-normal tracking-[0.015em] text-text-light-primary sm:flex">
+                            <span class="material-symbols-outlined">add</span>
+                            <span class="truncate">Ajouter un Animal</span>
+                        </button>
+                    </header>
+                    <form action="" method="POST">
+                        <div class="mt-8 flex flex-col gap-4 md:flex-row md:items-center">
+                            <div class="flex-grow">
+                                <label class="flex h-12 w-full min-w-40 flex-col">
+                                    <div class="flex h-full w-full flex-1 items-stretch rounded-lg">
+                                        <div
+                                            class="flex items-center justify-center rounded-l-lg border-y border-l border-border-light bg-card-light pl-4 text-text-light-secondary dark:border-border-dark dark:bg-card-dark dark:text-text-dark-secondary">
+                                            <button type="submit">
+                                                <span class="material-symbols-outlined">search</span>
+                                            </button>
+                                        </div>
+                                        <input name="search"
+                                            class="form-input h-full w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg border border-border-light bg-card-light pl-2 text-base font-normal leading-normal text-text-light-primary placeholder:text-text-light-secondary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary dark:placeholder:text-text-dark-secondary"
+                                            placeholder="Rechercher un animal..." value="" />
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="flex flex-wrap gap-4">
+                                <div class="flex-1">
+                                    <label class="sr-only" for="habitat-filter">Filtrer par Habitat</label>
+                                    <select name="Habitat"
+                                        class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary"
+                                        id="habitat-filter">
+                                        <option selected="">Tout Habitat</option>
+                                        <?php
+                                        foreach ($array_habitat as $habitat) {
+                                            echo "  <option value='" . $habitat[0] . "'>" . $habitat[1] . "</option>";
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
-                                <input
-                                    class="form-input h-full w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg border border-border-light bg-card-light pl-2 text-base font-normal leading-normal text-text-light-primary placeholder:text-text-light-secondary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary dark:placeholder:text-text-dark-secondary"
-                                    placeholder="Rechercher un animal..." value="" />
+                                <div class="flex-1">
+                                    <label class="sr-only" for="diet-filter">Filtrer par Type Alimentaire</label>
+                                    <select name="type-Alimentaire"
+                                        class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary"
+                                        id="diet-filter">
+                                        <option value="Tout-Type-Alimentaire" selected>Tout Type Alimentaire</option>
+                                        <option value="Carnivore">Carnivore</option>
+                                        <option value="Herbivore">Herbivore</option>
+                                        <option value="Omnivore">Omnivore</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="mt-8 grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6">
+
+                        <?php foreach ($array_animal as $animal) { ?>
+                            <div
+                                class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
+                                <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat"
+                                    data-alt="A majestic lion with a golden mane resting in a savanna environment."
+                                    style='background-image: url("images/<?= $animal[4] ?>");'>
+                                    <div
+                                        class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
+                                        <form action="" method="POST">
+                                            <input type="hidden" name="IdAnimal" value="<?= $animal[0] ?>">
+                                            <button target="edit"
+                                                class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span
+                                                    class="material-symbols-outlined text-base">edit</span></button>
+                                        </form>
+                                        <button target="delete" id="delete-button" data-id="<?= $animal[0]; ?>"
+                                            class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span
+                                                class="material-symbols-outlined text-base">delete</span></button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p
+                                        class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">
+                                        <?= $animal["1"] ?>
+                                    </p>
+                                    <div
+                                        class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
+                                        <span class="flex items-center gap-1 text-sm"><span
+                                                class="material-symbols-outlined text-base">grass</span>
+                                            <?= $animal["3"] ?>
+                                        </span>
+                                        <span class="flex items-center gap-1 text-sm"><span
+                                                class="material-symbols-outlined text-base">restaurant</span>
+                                            <?= $animal["2"] ?>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </main>
+            <!-- medel ajoute animal -->
+
+
+
+        </div>
+        <section id="formulaire-animal-container"
+            class="mx-auto <?= $hidden ?> max-w-4xl fixed inset-0 z-50 overflow-y-auto bg-background-light/80 backdrop-blur-sm position: fixed w-full bg-background-light   right: 0    ">
+
+            <div class="rounded-xl bg-white p-6 shadow-sm dark:bg-primary-dark sm:p-8 md:p-10">
+                <form action="<?= $action ?>" method="POST" enctype="multipart/form-data"
+                    class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
+
+                    <!-- Nom de l’animal -->
+                    <div class="md:col-span-2">
+                        <label class="flex flex-col" for="animal-name">
+                            <span class="pb-2 text-base font-medium">Nom de l'animal</span>
+                            <input name="nomAnimal"
+                                class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 text-base font-normal placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:placeholder:text-gray-400 dark:focus:border-accent"
+                                id="animal-name" placeholder="Par exemple, Léo le Lion"
+                                value="<?= htmlspecialchars($NomAnimal ?? ''); ?>" />
+                        </label>
+                    </div>
+
+                    <!-- CHAMP DESCRIPTION (ajouté ici) -->
+                    <div class="md:col-span-2">
+                        <label class="flex flex-col" for="description">
+                            <span class="pb-2 text-base font-medium">Description de l'animal</span>
+                            <textarea name="description"
+                                rows="5"
+                                class="w-full min-w-0 resize-none rounded-lg border border-gray-300 bg-background-light px-4 py-3 text-base font-normal placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:placeholder:text-gray-400 dark:focus:border-accent"
+                                id="description"
+                                placeholder="Décrivez l’animal, son caractère, ses particularités physiques, son histoire…"><?= $descriptionAnimal ?></textarea>
+                        </label>
+                    </div>
+
+                    <!-- Régime alimentaire -->
+                    <div>
+                        <label class="flex flex-col" for="diet">
+                            <span class="pb-2 text-base font-medium">Régime alimentaire</span>
+                            <div class="relative">
+                                <select name="type-regime"
+                                    class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 pr-10 text-base font-normal focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:focus:border-accent"
+                                    id="diet">
+                                    <option value=""  disabled>Sélectionnez un régime</option>
+                                    <option value="carnivore" <?= (isset($typeRegime) && $typeRegime == 'carnivore') ? 'selected' : '' ?>>Carnivore</option>
+                                    <option value="herbivore" <?= (isset($typeRegime) && $typeRegime == 'herbivore') ? 'selected' : '' ?>>Herbivore</option>
+                                    <option value="omnivore" <?= (isset($typeRegime) && $typeRegime == 'omnivore') ? 'selected' : '' ?>>Omnivore</option>
+                                </select>
                             </div>
                         </label>
                     </div>
-                    <div class="flex flex-wrap gap-4">
-                        <div class="flex-1">
-                            <label class="sr-only" for="habitat-filter">Filtrer par Habitat</label>
-                            <select
-                                class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary"
-                                id="habitat-filter">
-                                <option selected="">Tout Habitat</option>
-                                <option>Savane</option>
-                                <option>Jungle</option>
-                                <option>Désert</option>
-                                <option>Océan</option>
-                            </select>
-                        </div>
-                        <div class="flex-1">
-                            <label class="sr-only" for="diet-filter">Filtrer par Type Alimentaire</label>
-                            <select
-                                class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary"
-                                id="diet-filter">
-                                <option selected="">Tout Type Alimentaire</option>
-                                <option>Carnivore</option>
-                                <option>Herbivore</option>
-                                <option>Omnivore</option>
-                            </select>
+
+                    <!-- Habitat naturel -->
+                    <div>
+                        <label class="flex flex-col" for="habitat">
+                            <span class="pb-2 text-base font-medium">Habitat naturel</span>
+                            <div class="relative">
+                                <select name="idHab"
+                                    class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 pr-10 text-base font-normal focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:focus:border-accent"
+                                    id="habitat">
+                                    <option value=""   disabled>Sélectionnez un habitat</option>
+                                    <?php
+                                    foreach ($array_habitat as $habitat) {
+                                        $selected = (isset($idHab) && $idHab == $habitat[0]) ? 'selected' : '';
+                                        echo "<option value='{$habitat[0]}' $selected>{$habitat[1]}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Photo de l’animal -->
+                    <div class="md:col-span-2">
+                        <label class="pb-2 text-base font-medium" for="animal-photo">Photo de l'animal</label>
+                        <div id="image-preview" style="background-image:url('images/<?= $url_image ?>');" class="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg border-2 border-dashed border-gray-300 px-6 py-10 transition-colors hover:border-primary dark:border-gray-600 dark:hover:border-accent">
+                            <span class="material-symbols-outlined text-4xl text-primary dark:text-primary-light">
+                                cloud_upload
+                            </span>
+                            <div class="flex max-w-md flex-col items-center gap-1 text-center">
+                                <p class="text-base font-bold text-gray-700 dark:text-gray-200">Cliquez ou glissez-déposez une photo</p>
+                                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">PNG, JPG, GIF jusqu’à 10Mo</p>
+                            </div>
+                            <input name="image" type="file" class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                                id="image_animal">
                         </div>
                     </div>
-                </div>
-                <div class="mt-8 grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6">
-                    <div
-                        class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
-                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat"
-                            data-alt="A majestic lion with a golden mane resting in a savanna environment."
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAVdvk1_GXjcKzFlkJ546C4okoGsTWfU8Ak_p2bt-WegNa1jYdit9G0YWeU8SQSE6beExRy9gWZQo2qfFJmDXNS1nPgsCJiag4cZyPCiuvhcUjGcAKNAj_DxmjEcwUh2FH05Ah7RJVR8w94oKY8Un7blroMLWC_jK3LksM71Cd2Liyzgk8tLpsLCc1VF-rBM3y-ruGHm-woY1BkFzq-DUd_jbog_lJW_HfJVQULK9Ke8xYpp6ooyhN9fRUKsf1G7zilzepLAFT1lAo");'>
-                            <div
-                                class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span
-                                        class="material-symbols-outlined text-base">edit</span></button>
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span
-                                        class="material-symbols-outlined text-base">delete</span></button>
-                            </div>
-                        </div>
-                        <div>
-                            <p
-                                class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">
-                                Léo le Lion</p>
-                            <div
-                                class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">grass</span>Savane</span>
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">restaurant</span>Carnivore</span>
-                            </div>
-                        </div>
+
+                    <!-- Boutons -->
+                    <div class="mt-6 flex flex-col-reverse items-center gap-4 border-t border-gray-200 pt-6 dark:border-gray-700 md:col-span-2 md:flex-row md:justify-end">
+                        <button id="annuler-animal"
+                            class="h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-transparent px-6 text-base font-bold text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 md:w-auto"
+                            type="button">
+                            Annuler
+                        </button>
+                        <button id="enregistrer-animal"
+                            class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:bg-accent dark:text-primary dark:hover:bg-accent/90 dark:focus:ring-accent/50 md:w-auto"
+                            type="submit">
+                            <span class="material-symbols-outlined">save</span>
+                            Enregistrer
+                        </button>
                     </div>
-                    <div
-                        class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
-                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat"
-                            data-alt="A tall giraffe with distinctive spots eating leaves from a tree."
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB6q7Sfv_sCfzPGY0PjawSOHLvnTjA1POc8hJ4kKO4hJDj9lale19AkRr9vldAibuvZl3woNDWNui9MTgewuqrILV647ipV3AHia8ne_xIRE4VhaYlvPU2akRK63O8rWSMdYywsEtN7EVL3vZoN9_y4rCMTbJlnVeEJuChD7-rUHPGYqZUyJEWc7ZoYsTO_DXQEa6Hf7xfUGFhK3WQkSGkQeu-vYRY9Fsi_CINvGYDTXm-ZGZALCWcGSu55VoAD8iYJZfg6liVHCR0");'>
-                            <div
-                                class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span
-                                        class="material-symbols-outlined text-base">edit</span></button>
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span
-                                        class="material-symbols-outlined text-base">delete</span></button>
-                            </div>
-                        </div>
-                        <div>
-                            <p
-                                class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">
-                                Gigi la Girafe</p>
-                            <div
-                                class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">grass</span>Savane</span>
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">eco</span>Herbivore</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
-                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat"
-                            data-alt="A large crocodile partially submerged in murky jungle water."
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBaE5ilhrOOlropJlJo3nzKf_8xEWmU3F3_BvoLQetHkIx8cfA7by7nyna2osbhBRv_MUIKUrlnHTjZ47O-dP9qlpTFCAjZnjV_2VZJdSdu3Cp-_Auwitl6P1HAcidJZd0TpkvJWweQ3aVg_lBjvrRRCT8KvyGB4H5gyBj2RNhFR9iWwG8pBU_1t0EyBJU9EgkGyqStYgMF6Ixpvk2Vmyd6mGL_HVsmmdjxDeIBdd6AT5UNvqieiVAeUYmwBo6FbnhEierxG0d7JYc");'>
-                            <div
-                                class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span
-                                        class="material-symbols-outlined text-base">edit</span></button>
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span
-                                        class="material-symbols-outlined text-base">delete</span></button>
-                            </div>
-                        </div>
-                        <div>
-                            <p
-                                class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">
-                                Coco le Crocodile</p>
-                            <div
-                                class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">forest</span>Jungle</span>
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">restaurant</span>Carnivore</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
-                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat"
-                            data-alt="A zebra with striking black and white stripes in a grassy field."
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAcxDky46YhSd4lp5GrM9pb0wrCkRyg9ZUtPaomviMiP87zTF8uPsoXaVvxlyOCPBlYBoUAEdbMhYXkGW_qH-ejgGjuKP1LEp_ORSySmCRJs0PpseDPsRC97-Sn-fbwn1e4ro66tcks_cOlacoTYAYbE6Zq22NyFdE63p0OID_wqm2M88fapGb8TedJaJWY1pecDyT8oamz-QZG-GIiC-RTON1YZZ4r8mN3rv_eNQ3lFvMxH15VuALjFjBwQxI9TOTx_Rb7v3fRCIw");'>
-                            <div
-                                class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span
-                                        class="material-symbols-outlined text-base">edit</span></button>
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span
-                                        class="material-symbols-outlined text-base">delete</span></button>
-                            </div>
-                        </div>
-                        <div>
-                            <p
-                                class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">
-                                Zoe le Zèbre</p>
-                            <div
-                                class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">grass</span>Savane</span>
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">eco</span>Herbivore</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
-                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat"
-                            data-alt="A playful monkey swinging from a vine in a lush jungle."
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2LfDyb2dajUEQit8oUEIxLoqh1ZvtJ-c07ZJF7rGjaV_S1EW3egIYAcEFWoS54tjNPVSXgvPnlZ8QTGNmOZb69gX71AZ3TUDoZcRkEM1jXl5yskbzy0JLyWwsu4UXK1namZ6_3fSQrKiEd3Wnvr2B6z2eDzFW-DztIt5iRR2W_jRwBWYpoEquQ7zCEJQXfhQ3iBNlCNkmRo4Ii793WNsUt3TEXrg3ubjnBClBBe99mpPDw6DGd6SFQtm7I4RtMPmL5baiIW0niFg");'>
-                            <div
-                                class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span
-                                        class="material-symbols-outlined text-base">edit</span></button>
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span
-                                        class="material-symbols-outlined text-base">delete</span></button>
-                            </div>
-                        </div>
-                        <div>
-                            <p
-                                class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">
-                                Milo le Singe</p>
-                            <div
-                                class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">forest</span>Jungle</span>
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">lunch_dining</span>Omnivore</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
-                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat"
-                            data-alt="A cute penguin waddling on an icy arctic landscape."
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDMwfcu4zJOoHsdabVtaTuMVv_gwsHM5OAz0HpJfrxINfJeaAjDJ6cwaNu3CvYDrBBhu8fr9PEDHMWooJUdJO3nkaKlLowucOrTfjktxnF_pA84J_FKkqfAWPHWOJf-ZevD1n3R0khYaqo4NfgZWRCl9HNeBAI6NrpqRxt29phoUrOU1RTpPawdv45Fq8iEO0nGOdT1ZeIhqi7YQPgeUt8QVfvjXkYqbozNYPw7MxeucpPdeeI1ehAftbb4TImYD5VpraXQLlcT7ek");'>
-                            <div
-                                class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-2 p-2 transition-transform duration-300 group-hover:translate-y-0">
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-text-light-primary backdrop-blur-sm dark:bg-card-dark/80 dark:text-text-dark-primary"><span
-                                        class="material-symbols-outlined text-base">edit</span></button>
-                                <button
-                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-card-light/80 text-red-500 backdrop-blur-sm dark:bg-card-dark/80"><span
-                                        class="material-symbols-outlined text-base">delete</span></button>
-                            </div>
-                        </div>
-                        <div>
-                            <p
-                                class="text-lg font-bold leading-normal text-text-light-primary dark:text-text-dark-primary">
-                                Pipa le Pingouin</p>
-                            <div
-                                class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">ac_unit</span>Arctique</span>
-                                <span class="flex items-center gap-1 text-sm"><span
-                                        class="material-symbols-outlined text-base">restaurant</span>Carnivore</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
-        </main>
+        </section>
     </div>
+    <script>
+        $(document).ready(function() {
+            $("button[target='delete']").on('click', function() {
+                if (confirm("voullez vous vriement supprimer")) {
+                    const IdAnimal = $(this).data('id');
+                    $.ajax({
+                        url: 'php/supprimer_animal.php',
+                        type: 'POST',
+                        data: {
+                            IdAnimal: IdAnimal
+                        },
+                        success: function(response) {
+
+                            location.reload();
+
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <script src="js/script2.js"></script>
+    <!-- Script pour l'aperçu de l'image -->
+    <script>
+        document.getElementById('image_animal')?.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('image-preview');
+            const container = document.getElementById('preview-container');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.style.backgroundImage = `url('${e.target.result}')`;
+                    preview.style.backgroundSize = 'cover';
+                    preview.style.backgroundPosition = 'center';
+                    preview.style.backgroundRepeat = 'no-repeat';
+
+                    // Cache le texte par défaut
+                    placeholder.style.display = 'none';
+                    container.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                container.classList.add('hidden');
+                preview.src = '';
+            }
+        });
+    </script>
 
 </body>
 
