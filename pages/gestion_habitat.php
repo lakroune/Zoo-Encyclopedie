@@ -1,149 +1,178 @@
 <?php
 include "db_connect.php";
 
+$action = "php/ajouter_habitat.php";
+ 
+$descriptionHab = '';
+$idHab = 0;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
+  $hidden = "block";
+  $idHab = (int)$_POST['idHab'];
+  $action = "php/modifier_habitat.php?idHab=" . $idHab;
 
-$sql = " select * from  habitat";
-$resultat = $cennect->query($sql);
-$array_habitat = $resultat->fetch_all();
+  $sql = " select * from  habitat where idHab= " . $idHab;
 
+  try {
+    $resultat = $cennect->query($sql);
+    $habitat_modify = $resultat->fetch_assoc();
+     
+  } catch (Exception $e) {
+    print('Erreur de connexion à la base de données.');
+  }
+}
 ?>
+
+
 <!DOCTYPE html>
 <html class="light" lang="fr">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Formulaire Habitat (Ajout/Modification)</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings:
-                'FILL' 0,
-                'wght' 400,
-                'GRAD' 0,
-                'opsz' 24
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#13ec5b",
-                        "background-light": "#f6f8f6",
-                        "background-dark": "#102216",
-                        "text-light": "#0d1b12",
-                        "text-dark": "#e8f3ec",
-                        "subtle-light": "#4c9a66",
-                        "subtle-dark": "#a8c7b3",
-                        "border-light": "#cfe7d7",
-                        "border-dark": "#345941",
-                        "card-light": "#ffffff",
-                        "card-dark": "#1a3824"
-                    },
-                    fontFamily: {
-                        "display": ["Lexend", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Tableau de bord de gestion des habitats</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13ec5b",
+            "background-light": "#f6f8f6",
+            "background-dark": "#102216",
+          },
+          fontFamily: {
+            "display": ["Lexend", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display">
-    <div class="relative flex h-auto min-h-screen w-full flex-col">
-        <div class="flex h-full min-h-screen">
-            <aside class="flex w-64 flex-col gap-y-6 border-r border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-4">
-                <div class="flex items-center gap-3">
-                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Avatar de l'utilisateur" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDz1q8yYp6LmkLqIPlNKhYJVwNuqbeAZ__5zEECzs2hwh53LJxBeGrKX_ySSsXcJ1f36HPpew6wSVqT1I4BvpL_o_p-KxiYCHorVNF6j7zKTSNhA7uZycWCRU9JIqYM7FlUrO48b8sk3fQz_JUHLCkfzyBlbjRIY3VQyxfecOTm-IzorJUxwBExG1WNj_5v5WRy3Zs22e3CNxTaD_ZD_cMJdYi1U1DzwOAG_mKTOt6GTf9r8RVdXuoRPnPGsMo6Z-yUJ3Iv3wlCedA");'></div>
-                    <div class="flex flex-col">
-                        <h1 class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Zoo Manager</h1>
-                        <p class="text-subtle-light dark:text-subtle-dark text-sm font-normal leading-normal">Gestionnaire</p>
-                    </div>
-                </div>
-                <nav class="flex flex-col gap-2">
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/20 text-text-light dark:text-text-dark" href="#">
-                        <span class="material-symbols-outlined text-2xl">dashboard</span>
-                        <p class="text-sm font-medium leading-normal">Dashboard</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/20 text-text-light dark:text-text-dark" href="#">
-                        <span class="material-symbols-outlined text-2xl">pets</span>
-                        <p class="text-sm font-medium leading-normal">Animaux</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-text-light dark:text-text-dark" href="#">
-                        <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">park</span>
-                        <p class="text-sm font-medium leading-normal">Habitats</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/20 text-text-light dark:text-text-dark" href="#">
-                        <span class="material-symbols-outlined text-2xl">school</span>
-                        <p class="text-sm font-medium leading-normal">Éducateurs</p>
-                    </a>
-                </nav>
-                <div class="mt-auto flex flex-col gap-4">
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/20 text-text-light dark:text-text-dark" href="#">
-                        <span class="material-symbols-outlined text-2xl">settings</span>
-                        <p class="text-sm font-medium leading-normal">Paramètres</p>
-                    </a>
-                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-text-light text-sm font-bold leading-normal tracking-[0.015em]">
-                        <span class="truncate">Déconnexion</span>
+<body class="font-display bg-background-light dark:bg-background-dark">
+  <div class="relative flex h-auto min-h-screen w-full group/design-root ">
+    <aside
+      class="flex h-screen w-64 flex-col justify-between border-r border-border-light bg-foreground-light p-4 dark:border-border-dark dark:bg-foreground-dark sticky top-0">
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-3 px-1 py-2">
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+            data-alt="Logo du Zoo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0Lg1OEXJcVVLNu-F6WdrhKg3x_oITAykEs4sv1tonbmxNuSYelzNpbTz0uZeDE9pn5C1fVmaHtkBsSZswb9MqE4bPkadWEdAXoShGf6e9VFYxd2HUxueX0eXHhOxmEmwV81zxkOeXGuTh_FHL-eM-5x7tof3w167DposoHSNPe5IY9s-L-g1NpZN-optSF_VH8WfQOdshKb6i8QxLM0StObMwydCAiXrkhFc1W8izSSSn34g7N28pr0md3jJqxSnH434lfcrFMF8");'>
+          </div>
+          <div class="flex flex-col">
+            <h1
+              class="text-base font-medium leading-normal text-text-light-primary dark:text-text-dark-primary">
+              Zoo Manager</h1>
+            <p
+              class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
+              Application de Gestion</p>
+          </div>
+        </div>
+        <nav class="mt-4 flex flex-col gap-1">
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20" href="index.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark"
+              style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Tableau
+              de bord</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="gestion_des_animaux.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">eco</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
+              animaux</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30"
+            href="gestion_des_habitats.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
+              habitats</span>
+          </a>
+
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="Statistiques.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">bar_chart</span>
+            <span
+              class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Statistiques</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="jeux.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">joystick</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Jeu
+              animalier</span>
+          </a>
+        </nav>
+      </div>
+      <div class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+          href="#">
+          <span class="material-symbols-outlined text-text-light dark:text-text-dark">settings</span>
+          <span
+            class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Paramètres</span>
+        </a>
+      </div>
+    </aside>
+    <div class="flex-1 flex flex-col">
+
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 position : relative">
+        <div class="flex flex-wrap justify-between items-start gap-4 mb-6">
+          <div class="flex min-w-72 flex-col gap-2">
+            <p class="text-[#0d1b12] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Gestion des Habitats</p>
+            <p class="text-[#4c9a66] dark:text-primary/70 text-base font-normal leading-normal">Parcourez, ajoutez, modifiez ou supprimez des habitats.</p>
+          </div>
+          <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#0d1b12] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-opacity-90 transition-colors gap-2" id="ajouter-habitat">
+            <span class="material-symbols-outlined text-xl">add</span>
+            <span class="truncate">Ajouter un Habitat</span>
+          </button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          <?php foreach ($array_habitat as $habitat) { ?>
+            <div class="flex flex-col gap-3 rounded-xl bg-white dark:bg-gray-900/50 border border-primary/20 dark:border-primary/30 shadow-sm transition-shadow hover:shadow-lg overflow-hidden">
+              <div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Expansive grassy plains of the African Savanna with acacia trees under a blue sky."
+                style='background-image: url("images/<?= $habitat[2] ?>");'></div>
+              <div class="p-4 flex flex-col flex-1">
+                <p class="text-[#0d1b12] dark:text-white text-lg font-bold leading-normal"> <?= $habitat[1] ?></p>
+                <p class="text-[#4c9a66] dark:text-primary/70 text-sm font-normal leading-normal mt-1 flex-1"><?= $habitat[3] ?></p>
+                <div class="flex items-center justify-end gap-2 mt-4">
+                  <form action="" method="POST">
+                    <input type="hidden" name="idHab" value="<?= $habitat[0]; ?>">
+                    <button target="edit" data-id="<?= $habitat[0]; ?> class=" flex items-center justify-center size-9
+                      rounded-lg hover:bg-primary/20 dark:hover:bg-primary/30 text-[#4c9a66] dark:text-primary/70
+                      dark:hover:text-primary transition-colors">
+                      <span class="material-symbols-outlined text-xl">edit</span>
                     </button>
+                  </form>
+
+
+                  <button target="delete" data-id="<?= $habitat[0]; ?>" class="flex items-center justify-center size-9 rounded-lg hover:bg-red-500/10 dark:hover:bg-red-500/20 text-red-600 dark:text-red-500 transition-colors">
+                    <span class="material-symbols-outlined text-xl">delete</span>
+                  </button>
                 </div>
-            </aside>
-            <main class="flex-1 p-6 lg:p-10">
-                <div class="mx-auto max-w-4xl">
-                    <div class="mb-8 flex items-start justify-between">
-                        <div class="flex min-w-72 flex-col gap-2">
-                            <h1 class="text-text-light dark:text-text-dark text-4xl font-black leading-tight tracking-[-0.033em]">Formulaire Habitat</h1>
-                            <p class="text-subtle-light dark:text-subtle-dark text-base font-normal leading-normal">Ajoutez ou modifiez les informations d'un habitat.</p>
-                        </div>
-                    </div>
-                    <div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark">
-                        <form class="flex flex-col">
-                            <div class="p-6 lg:p-8 space-y-8">
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-6 items-start">
-                                    <div class="flex flex-col gap-1">
-                                        <label class="text-text-light dark:text-text-dark text-base font-medium leading-normal" for="habitat-name">Nom</label>
-                                        <p class="text-subtle-light dark:text-subtle-dark text-sm">Le nom officiel de l'habitat.</p>
-                                    </div>
-                                    <div class="md:col-span-2">
-                                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-14 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal" id="habitat-name" placeholder="Ex: Savane Africaine" type="text" value="" />
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-6 items-start">
-                                    <div class="flex flex-col gap-1">
-                                        <label class="text-text-light dark:text-text-dark text-base font-medium leading-normal" for="habitat-description">Description</label>
-                                        <p class="text-subtle-light dark:text-subtle-dark text-sm">Une description détaillée de l'habitat, sa faune, sa flore, etc.</p>
-                                    </div>
-                                    <div class="md:col-span-2">
-                                        <textarea class="form-textarea flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark min-h-36 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal" id="habitat-description" placeholder="Décrivez les caractéristiques de l'habitat..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col-reverse sm:flex-row flex-1 gap-3 justify-end p-6 bg-background-light dark:bg-background-dark border-t border-border-light dark:border-border-dark rounded-b-xl">
-                                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-transparent text-subtle-light dark:text-subtle-dark text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/10 dark:hover:bg-primary/20" type="button">
-                                    <span class="truncate">Annuler</span>
-                                </button>
-                                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-text-light text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90 gap-2" type="submit">
-                                    <span class="material-symbols-outlined text-xl">save</span>
-                                    <span class="truncate">Enregistrer les modifications</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </main>
-            <section class="flex-1 p-6 lg:p-10 <?= $hidden ?> fixed inset-0 bg-background-light dark:bg-background-dark z-50 overflow-y-auto"
+              </div>
+            </div>
+          <?php } ?>
+        </div>
+
+      </main>
+      <!-- model ajoute habitat -->
+
+      <section class="flex-1 p-6 lg:p-10 <?= $hidden ?> fixed inset-0 bg-background-light dark:bg-background-dark z-50 overflow-y-auto"
         id="formulaire-habitat-container">
         <div class="mx-auto max-w-4xl">
           <div class="mb-8 flex items-start justify-between">
@@ -264,9 +293,60 @@ $array_habitat = $resultat->fetch_all();
           </div>
         </div>
       </section>
-        </div>
     </div>
+  </div>
+  <script src="js/script.js">
 
+  </script>
+  <script>
+    $(document).ready(function() {
+      $("button[target='delete']").on('click', function(e) {
+        if (confirm('Voulez-vous vraiment supprimer cet habitat ?')) {
+          const habitatId = $(this).data('id');
+          $.ajax({
+            url: 'php/supprimer_habitat.php',
+            type: 'POST',
+            data: {
+              idHab: habitatId
+            },
+            success: function(response) {
+
+              location.reload();
+
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+  <!-- Script pour l'aperçu de l'image -->
+  <script>
+    document.getElementById('image_habitat')?.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById('image-preview');
+      const container = document.getElementById('preview-container');
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.style.backgroundImage = `url('${e.target.result}')`;
+          preview.style.backgroundSize = 'cover';
+          preview.style.backgroundPosition = 'center';
+          preview.style.backgroundRepeat = 'no-repeat';
+
+          // Cache le texte par défaut
+          placeholder.style.display = 'none';
+          container.classList.remove('hidden');
+        }
+        reader.readAsDataURL(file);
+      } else {
+        container.classList.add('hidden');
+        preview.src = '';
+      }
+    });
+  </script>
 </body>
+
 
 </html>
