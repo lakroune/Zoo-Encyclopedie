@@ -22,6 +22,25 @@ $resultat = $cennect->query($sql);
 $stats_habitats = $resultat->fetch_all();
 
 
+$total = $Herbivore_count + $Omnivore_count + $Carnivore_count;
+
+if ($total == 0) {
+  $Herbivore_percentage = 0;
+  $Omnivore_percentage = 0;
+  $Carnivore_percentage = 0;
+} else {
+  $Herbivore_percentage = round(($Herbivore_count / $total) * 100);
+  $Omnivore_percentage = round(($Omnivore_count / $total) * 100);
+  $Carnivore_percentage = round(($Carnivore_count / $total) * 100);
+}
+
+$Herbivore_offset = 0;
+
+$Omnivore_offset = 360 - $Herbivore_percentage;
+
+$Carnivore_offset = 360 - ($Herbivore_percentage + $Omnivore_percentage);
+
+$total_types = 3;
 
 
 ?>
@@ -178,15 +197,15 @@ $stats_habitats = $resultat->fetch_all();
                   <path class="stroke-[#34D399]"
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831  a 15.9155 15.9155 0 0 1 0 -31.831 "
                     fill="none"
-                    stroke-dasharray="<?php  ?>, 100"
-                    stroke-dashoffset=""
+                    stroke-dasharray="<?php echo ($Herbivore_percentage / 100) * 360; ?>, 100"
+                    stroke-dashoffset="-<?php echo $Omnivore_offset; ?>"
                     stroke-width="3">
                   </path>
 
                   <path class="stroke-[#FBBF24]"
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke-dasharray="<?php echo  100; ?>, 100"
+                    stroke-dasharray="<?php echo ($Omnivore_percentage / 100) * 360; ?>, 100"
                     stroke-dashoffset="-<?php echo $Omnivore_offset; ?>"
                     stroke-width="3">
                   </path>
@@ -194,13 +213,13 @@ $stats_habitats = $resultat->fetch_all();
                   <path class="stroke-[#F87171]"
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke-dasharray="<?php  ?>, 100"
+                    stroke-dasharray="<?php echo ($Carnivore_percentage / 100) * 360; ?>, 100"
                     stroke-dashoffset="-<?php echo $Carnivore_offset; ?>"
                     stroke-width="3">
                   </path>
                 </svg>
                 <div class="absolute flex flex-col items-center">
-                  <span class="text-3xl font-bold text-gray-900 dark:text-white"><?php ; ?></span>
+                  <span class="text-3xl font-bold text-gray-900 dark:text-white"><?php echo $total_types; ?></span>
                   <span class="text-sm text-gray-500 dark:text-gray-400">Types</span>
                 </div>
               </div>
@@ -208,15 +227,15 @@ $stats_habitats = $resultat->fetch_all();
             <div class="flex justify-center gap-6 text-sm">
               <div class="flex items-center gap-2">
                 <div class="h-3 w-3 rounded-full bg-[#34D399]"></div>
-                <span class="text-gray-700 dark:text-gray-300">Herbivore </span>
+                <span class="text-gray-700 dark:text-gray-300">Herbivore (<?= $Herbivore_percentage ?>%)</span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="h-3 w-3 rounded-full bg-[#FBBF24]"></div>
-                <span class="text-gray-700 dark:text-gray-300"> /span>
+                <span class="text-gray-700 dark:text-gray-300">Omnivore (<?= $Omnivore_percentage ?>%)</span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="h-3 w-3 rounded-full bg-[#F87171]"></div>
-                <span class="text-gray-700 dark:text-gray-300"> </span>
+                <span class="text-gray-700 dark:text-gray-300">Carnivore (<?= $Carnivore_percentage ?>%)</span>
               </div>
             </div>
           </div>
@@ -229,13 +248,15 @@ $stats_habitats = $resultat->fetch_all();
               </p>
             </div>
             <div class="grid min-h-[240px] gap-x-4 gap-y-3 grid-cols-[auto_1fr] items-center py-3">
-              
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400"> </p>
+              <?php
+              foreach ($stats_habitats as $stats) {
+              ?>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400"><?= $stats[0] ?></p>
                 <div class="h-3 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-                  <div class="h-3 rounded-full bg-[#F59E0B]" style="width: ;"></div>
+                  <div class="h-3 rounded-full bg-[#F59E0B]" style="width: <?= ($stats[1] / $numbre_animal) * 100 ?>%;"></div>
                 </div>
 
-            
+              <?php } ?>
             </div>
           </div>
         </div>
