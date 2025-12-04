@@ -11,7 +11,17 @@ $resultat = $cennect->query($sql);
 $numbre_animal = $resultat->fetch_assoc()["total_animal"];
 
 
- 
+
+$sql = "select Type_alimentaire,count(Type_alimentaire)  as counttype from animal group by Type_alimentaire";
+$resultat = $cennect->query($sql);
+$Carnivore_count = $resultat->fetch_assoc()["counttype"];
+$Omnivore_count = $resultat->fetch_assoc()["counttype"];
+$Herbivore_count = $resultat->fetch_assoc()["counttype"];
+$sql = "select nomhab, count(nomhab) as counthab from habitat h, animal a where a.idhab = h.idhab group by nomhab order by counthab desc;";
+$resultat = $cennect->query($sql);
+$stats_habitats = $resultat->fetch_all();
+
+
 
 
 ?>
@@ -168,15 +178,15 @@ $numbre_animal = $resultat->fetch_assoc()["total_animal"];
                   <path class="stroke-[#34D399]"
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831  a 15.9155 15.9155 0 0 1 0 -31.831 "
                     fill="none"
-                    stroke-dasharray="<?php echo ($Herbivore_percentage / 100) * 360; ?>, 100"
-                    stroke-dashoffset="-<?php echo $Omnivore_offset; ?>"
+                    stroke-dasharray="<?php  ?>, 100"
+                    stroke-dashoffset=""
                     stroke-width="3">
                   </path>
 
                   <path class="stroke-[#FBBF24]"
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke-dasharray=" , 100"
+                    stroke-dasharray="<?php echo  100; ?>, 100"
                     stroke-dashoffset="-<?php echo $Omnivore_offset; ?>"
                     stroke-width="3">
                   </path>
@@ -184,13 +194,13 @@ $numbre_animal = $resultat->fetch_assoc()["total_animal"];
                   <path class="stroke-[#F87171]"
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke-dasharray=" , 100"
-                    stroke-dashoffset="- ; ?>"
+                    stroke-dasharray="<?php  ?>, 100"
+                    stroke-dashoffset="-<?php echo $Carnivore_offset; ?>"
                     stroke-width="3">
                   </path>
                 </svg>
                 <div class="absolute flex flex-col items-center">
-                  <span class="text-3xl font-bold text-gray-900 dark:text-white"><?php echo $total_types; ?></span>
+                  <span class="text-3xl font-bold text-gray-900 dark:text-white"><?php ; ?></span>
                   <span class="text-sm text-gray-500 dark:text-gray-400">Types</span>
                 </div>
               </div>
@@ -198,15 +208,15 @@ $numbre_animal = $resultat->fetch_assoc()["total_animal"];
             <div class="flex justify-center gap-6 text-sm">
               <div class="flex items-center gap-2">
                 <div class="h-3 w-3 rounded-full bg-[#34D399]"></div>
-                <span class="text-gray-700 dark:text-gray-300">Herbivore (<?= $Herbivore_percentage ?>%)</span>
+                <span class="text-gray-700 dark:text-gray-300">Herbivore </span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="h-3 w-3 rounded-full bg-[#FBBF24]"></div>
-                <span class="text-gray-700 dark:text-gray-300">Omnivore (<?= $Omnivore_percentage ?>%)</span>
+                <span class="text-gray-700 dark:text-gray-300"> /span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="h-3 w-3 rounded-full bg-[#F87171]"></div>
-                <span class="text-gray-700 dark:text-gray-300">Carnivore (<?= $Carnivore_percentage ?>%)</span>
+                <span class="text-gray-700 dark:text-gray-300"> </span>
               </div>
             </div>
           </div>
@@ -220,12 +230,12 @@ $numbre_animal = $resultat->fetch_assoc()["total_animal"];
             </div>
             <div class="grid min-h-[240px] gap-x-4 gap-y-3 grid-cols-[auto_1fr] items-center py-3">
               
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">nom</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400"> </p>
                 <div class="h-3 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-                  <div class="h-3 rounded-full bg-[#F59E0B]" style="width:23%;"></div>
+                  <div class="h-3 rounded-full bg-[#F59E0B]" style="width: ;"></div>
                 </div>
 
-               
+            
             </div>
           </div>
         </div>
