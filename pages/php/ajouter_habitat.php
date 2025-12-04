@@ -19,7 +19,7 @@ if ($resultat) {
     echo "Erreur ";
 }
 
-header("Location: ../gestion_des_habitats.php");
+header("Location: ../gestion_habitats.php");
 
 
  

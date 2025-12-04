@@ -30,25 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['IdAnimal'])) {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($_POST["type-Alimentaire"]) || isset($_POST["Habitat"]) || $_POST['search'])) {
-
-    if ($_POST["type-Alimentaire"] == "Tout-Type-Alimentaire"  && $_POST["Habitat"] == "Tout Habitat") {
-        $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a , habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%'";
-    } else 
-    if ($_POST["type-Alimentaire"] != "Tout-Type-Alimentaire"  && $_POST["Habitat"] == "Tout Habitat") {
-        $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a ,
-         habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%' and a.Type_alimentaire='" . $_POST["type-Alimentaire"] . "'";
-    } else
-
-    if ($_POST["type-Alimentaire"] == "Tout-Type-Alimentaire"  && $_POST["Habitat"] != "Tout Habitat") {
-        $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a ,
-         habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%' and a.IdHab='" . $_POST["Habitat"] . "'";
-    } else   $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a ,
-         habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%' and a.IdHab='" . $_POST["Habitat"] . "'
-          and a.Type_alimentaire='" . $_POST["type-Alimentaire"] . "'";
-    $resultat = $cennect->query($sql);
-    $array_animal = $resultat->fetch_all();
-}
+ 
 ?>
 
 
