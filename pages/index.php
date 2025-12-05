@@ -52,64 +52,58 @@
 <body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
     <div class="flex min-h-screen w-full">
         <aside
-            class="flex h-screen w-64 flex-col justify-between border-r border-border-light bg-foreground-light p-4 dark:border-border-dark dark:bg-foreground-dark sticky top-0">
-            <div class="flex flex-col gap-4">
-                <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                        data-alt="Logo du Zoo"
-                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0Lg1OEXJcVVLNu-F6WdrhKg3x_oITAykEs4sv1tonbmxNuSYelzNpbTz0uZeDE9pn5C1fVmaHtkBsSZswb9MqE4bPkadWEdAXoShGf6e9VFYxd2HUxueX0eXHhOxmEmwV81zxkOeXGuTh_FHL-eM-5x7tof3w167DposoHSNPe5IY9s-L-g1NpZN-optSF_VH8WfQOdshKb6i8QxLM0StObMwydCAiXrkhFc1W8izSSSn34g7N28pr0md3jJqxSnH434lfcrFMF8");'>
-                    </div>
-                    <div class="flex flex-col">
-                        <h1
-                            class="text-base font-medium leading-normal text-text-light-primary dark:text-text-dark-primary">
-                            Zoo Manager</h1>
-                        <p
-                            class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
-                            Application de Gestion</p>
-                    </div>
-                </div>
-                <nav class="mt-4 flex flex-col gap-1">
-                    <a class="flex items-center gap-3 rounded-lg bg-primary/20 px-3 py-2.5 dark:bg-primary/30" href="#">
-                        <span class="material-symbols-outlined text-text-light dark:text-text-dark"
-                            style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                        <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Tableau
-                            de bord</span>
-                    </a>
-                    <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-                        href="#">
-                        <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
-                        <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
-                            animaux</span>
-                    </a>
-                    <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-                        href="#">
-                        <span class="material-symbols-outlined text-text-light dark:text-text-dark">eco</span>
-                        <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
-                            habitats</span>
-                    </a>
-                    <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-                        href="#">
-                        <span class="material-symbols-outlined text-text-light dark:text-text-dark">bar_chart</span>
-                        <span
-                            class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Statistiques</span>
-                    </a>
-                    <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-                        href="#">
-                        <span class="material-symbols-outlined text-text-light dark:text-text-dark">joystick</span>
-                        <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Jeu
-                            animalier</span>
-                    </a>
-                </nav>
-            </div>
-            <div class="flex flex-col gap-2">
-                <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-                    href="#">
-                    <span class="material-symbols-outlined text-text-light dark:text-text-dark">settings</span>
-                    <span
-                        class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Paramètres</span>
-                </a>
-            </div>
-        </aside>
+      class="flex h-screen w-64 flex-col justify-between border-r border-border-light bg-foreground-light p-4 dark:border-border-dark dark:bg-foreground-dark sticky top-0">
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-3 px-1 py-2">
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Logo du Zoo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0Lg1OEXJcVVLNu-F6WdrhKg3x_oITAykEs4sv1tonbmxNuSYelzNpbTz0uZeDE9pn5C1fVmaHtkBsSZswb9MqE4bPkadWEdAXoShGf6e9VFYxd2HUxueX0eXHhOxmEmwV81zxkOeXGuTh_FHL-eM-5x7tof3w167DposoHSNPe5IY9s-L-g1NpZN-optSF_VH8WfQOdshKb6i8QxLM0StObMwydCAiXrkhFc1W8izSSSn34g7N28pr0md3jJqxSnH434lfcrFMF8");'>
+          </div>
+          <div class="flex flex-col">
+            <h1 class="text-base font-medium leading-normal text-text-light-primary dark:text-text-dark-primary">
+              Zoo Manager</h1>
+            <p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
+              Application de Gestion</p>
+          </div>
+        </div>
+        <nav class="mt-4 flex flex-col gap-1">
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="index.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark"
+              style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Tableau
+              de bord</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30" href="gestion_des_animaux.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
+              animaux</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="gestion_des_habitats.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">eco</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
+              habitats</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="Statistiques.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">bar_chart</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Statistiques</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="jeux.php">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">joystick</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Jeu
+              animalier</span>
+          </a>
+        </nav>
+      </div>
+      <div class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20" href="#">
+          <span class="material-symbols-outlined text-text-light dark:text-text-dark">settings</span>
+          <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Paramètres</span>
+        </a>
+      </div>
+    </aside>
         <main class="flex-1 p-6 md:p-8 lg:p-10 overflow-y-auto">
             <div class="mx-auto max-w-7xl">
                 <div class="mb-8 flex flex-wrap justify-between gap-3">
