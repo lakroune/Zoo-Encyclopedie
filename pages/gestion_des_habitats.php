@@ -12,21 +12,25 @@ $hidden = "hidden";
 $nameHab = "";
 $descriptionHab = '';
 $idHab = 0;
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter'])) {
+  $hidden = "block";
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
   $hidden = "block";
   $idHab = (int)$_POST['idHab'];
   $action = "php/modifier_habitat.php?idHab=" . $idHab;
 
-  $sql = " select * from  habitat where idHab= " . $idHab;
-
   try {
+    $sql = " select * from  habitat where idHab= " . $idHab;
     $resultat = $cennect->query($sql);
     $habitat_modify = $resultat->fetch_assoc();
     $nameHab =   $habitat_modify['NomHab'];
     $descriptionHab =  $habitat_modify['Description_Hab'];
     $url_image =  $habitat_modify['Url_image'];
   } catch (Exception $e) {
-    print('Erreur de connexion à la base de données.');
+    error_log(date('y-m-d h:i:s') . "  gestion_habiats.php :error ." . $e->getMessage() . PHP_EOL, 3, "error.log");
   }
 }
 ?>
@@ -137,10 +141,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
             <p class="text-[#0d1b12] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Gestion des Habitats</p>
             <p class="text-[#4c9a66] dark:text-primary/70 text-base font-normal leading-normal">Parcourez, ajoutez, modifiez ou supprimez des habitats.</p>
           </div>
-          <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#0d1b12] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-opacity-90 transition-colors gap-2" id="ajouter-habitat">
-            <span class="material-symbols-outlined text-xl">add</span>
-            <span class="truncate">Ajouter un Habitat</span>
-          </button>
+          <form action="" method="POST">
+            <input type="hidden" name="ajouter" value="ajouter">
+            <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#0d1b12] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-opacity-90 transition-colors gap-2" id="ajouter-habitat">
+              <span class="material-symbols-outlined text-xl">add</span>
+              <span class="truncate">Ajouter un Habitat</span>
+            </button>
+          </form>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
           <?php foreach ($array_habitat as $habitat) { ?>
@@ -152,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
                 <p class="text-[#4c9a66] dark:text-primary/70 text-sm font-normal leading-normal mt-1 flex-1"><?= $habitat[3] ?></p>
                 <div class="flex items-center justify-end gap-2 mt-4">
                   <form action="" method="POST">
-                    <input type="hidden" name="idHab" value="<?= $habitat[0]; ?>">
+                    <input type="hidden" name="idHab" value="<?= $habitat[0] ?? ""; ?>">
                     <button target="edit" data-id="<?= $habitat[0]; ?> class=" flex items-center justify-center size-9
                       rounded-lg hover:bg-primary/20 dark:hover:bg-primary/30 text-[#4c9a66] dark:text-primary/70
                       dark:hover:text-primary transition-colors">
@@ -173,14 +180,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
       </main>
       <!-- model ajoute habitat -->
 
-      <section class="flex-1 p-6 lg:p-10 <?= $hidden ?> fixed inset-0 bg-background-light dark:bg-background-dark z-50 overflow-y-auto"
+      <section class="  flex-1 p-6 lg:p-10 <?= $hidden ?> fixed left-[280px]   inset-0 bg-background-light dark:bg-background-dark z-50 overflow-y-auto"
         id="formulaire-habitat-container">
-        <div class="mx-auto max-w-4xl">
+        <div class="mx-">
           <div class="mb-8 flex items-start justify-between">
             <div class="flex min-w-72 flex-col gap-2">
-              <h1 class="text-text-light dark:text-text-dark text-4xl font-black leading-tight tracking-[-0.033em]">
-                Formulaire Habitat
-              </h1>
+
               <p class="text-subtle-light dark:text-subtle-dark text-base font-normal leading-normal">
                 Ajoutez ou modifiez les informations d'un habitat.
               </p>
@@ -188,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
           </div>
 
           <div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark">
-            <form action="<?= $action ?>"
+            <form id="form-model" action="<?= $action ?>"
               id="formulaire-habitat"
               method="post"
               enctype="multipart/form-data"
@@ -246,12 +251,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
                       Image représentative (JPG, PNG, GIF - max 10 Mo)
                     </p>
                   </div>
-                  <div class="md:col-span-2">
+                  <div class="md:col-span-2 w-[300px] ">
 
 
 
                     <!-- Champ upload -->
-                    <div id="image-preview" style="background-image:url('images/<?= $url_image ?>');" class="relative border-2 border-dashed border-border-light dark:border-border-dark rounded-lg p-8 text-center hover:border-primary/50 dark:hover:border-primary/50 transition-colors">
+                    <div id="image-preview" style="background-image:url('images/<?= $url_image ?>'); background-size:cover;" class="relative border-2 border-dashed border-border-light dark:border-border-dark rounded-lg p-8 text-center hover:border-primary/50 dark:hover:border-primary/50 transition-colors">
                       <input type="file"
                         name="image_habitat"
                         id="image_habitat"
@@ -279,13 +284,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
 
               <!-- Boutons -->
               <div class="flex flex-col-reverse sm:flex-row gap-3 justify-end p-6 bg-background-light dark:bg-background-dark border-t border-border-light dark:border-border-dark rounded-b-xl">
-                <form action="">
-                  <button type="submit"
-                    id="annuler-habitat"
-                    class="h-12 px-6 rounded-lg bg-transparent border border-border-light dark:border-border-dark text-text-light dark:text-text-dark font-bold hover:bg-primary/10 dark:hover:bg-primary/20 transition">
-                    Annuler
-                  </button>
-                </form>
+                <button type="button"
+                  id="annuler-habitat"
+                  class="h-12 px-6 rounded-lg bg-transparent border border-border-light dark:border-border-dark text-text-light dark:text-text-dark font-bold hover:bg-primary/10 dark:hover:bg-primary/20 transition">
+                  Annuler
+                </button>
                 <button type="submit"
                   class="h-12 px-6 rounded-lg bg-primary text-white font-bold hover:opacity-90 flex items-center gap-2 transition">
                   <span class="material-symbols-outlined text-xl">save</span>
@@ -298,8 +301,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
       </section>
     </div>
   </div>
-  <script src="js/script.js">
-
+  <script>
+    document.getElementById("annuler-habitat").addEventListener('click', () => {
+      document.getElementById('form-model').setAttribute("action", "php/ajouter_habitat.php");
+      document.getElementById('form-model').reset();
+      document.getElementById("formulaire-habitat-container").classList.toggle("hidden");
+    });
   </script>
   <script>
     $(document).ready(function() {
@@ -329,7 +336,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
       const file = e.target.files[0];
       const preview = document.getElementById('image-preview');
       const container = document.getElementById('preview-container');
-
       if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -337,7 +343,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
           preview.style.backgroundSize = 'cover';
           preview.style.backgroundPosition = 'center';
           preview.style.backgroundRepeat = 'no-repeat';
-
           // Cache le texte par défaut
           placeholder.style.display = 'none';
           container.classList.remove('hidden');

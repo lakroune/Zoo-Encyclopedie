@@ -159,9 +159,9 @@ $Description_animal = $animal["Description_animal"] ? $animal["Description_anima
                         <div class="lg:col-span-2 flex flex-col gap-6">
 
                             <div class="flex items-start justify-between">
-                                <h2 class="text-3xl md:text-3xl font-black"><?= $NomAnimal ?></h2>
+                                <h2 class="text-3xl md:text-3xl font-black" id="text-to-read"><?= $NomAnimal ?></h2>
 
-                                <button class="flex items-center justify-center h-10 w-10 rounded-full bg-primary/20 hover:bg-primary/30 transition">
+                                <button onclick="readText()" class="flex items-center justify-center h-10 w-10 rounded-full bg-primary/20 hover:bg-primary/30 transition">
                                     <span class="material-symbols-outlined">volume_up</span>
                                 </button>
                             </div>
@@ -251,6 +251,22 @@ $Description_animal = $animal["Description_animal"] ? $animal["Description_anima
         </div>
     </div>
 
+    <script>
+        function readText() {
+            if ('speechSynthesis' in window) {
+                const textInput = "En savoir plus sur :   <?= $NomAnimal ?>... est un animal <?= $Type_alimentaire ?>, son habitat est   <?= $NomHab ?>, une petite description concernant cet animal : <?= $Description_animal ?>."
+
+                const utterance = new SpeechSynthesisUtterance(textInput);
+                utterance.lang = 'fr';
+                utterance.pitch = 0.1;
+                utterance.rate = 1.2;
+                window.speechSynthesis.speak(utterance);
+
+            } else {
+                alert("votre navigature no support Web Speech APi")
+            }
+        }
+    </script>
 </body>
 
 </html>

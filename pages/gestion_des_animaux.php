@@ -1,18 +1,21 @@
 <?php
 include "db_connect.php";
-
-
 $action = "php/ajouter_animal.php";
 
-$sql = " select * from  habitat";
-$resultat = $cennect->query($sql);
-$array_habitat = $resultat->fetch_all();
-
-
-$sql = " select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a join habitat as h where  a.IdHab=h.IdHab";
-$resultat = $cennect->query($sql);
-$array_animal = $resultat->fetch_all();
-
+try {
+    $sql = " select * from  habitat";
+    $resultat = $cennect->query($sql);
+    $array_habitat = $resultat->fetch_all();
+} catch (Exception $e) {
+    error_log('page animal (14):Erreur de connexion à la base de données.', 3, "error.log");
+}
+try {
+    $sql = " select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a join habitat as h where  a.IdHab=h.IdHab";
+    $resultat = $cennect->query($sql);
+    $array_animal = $resultat->fetch_all();
+} catch (Exception $e) {
+    error_log('page animal (17):Erreur de connexion à la base de données.', 3, "error.log");
+}
 $hidden = "hidden";
 $NomAnimal = "";
 $Url_image = "";
@@ -38,18 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['IdAnimal'])) {
         $typeRegime =  $animal_modify['Type_alimentaire'];
         $idHab = (int) $animal_modify['IdHab'];
     } catch (Exception $e) {
-        print('Erreur de connexion à la base de données.');
+        error_log(date('y-m-d h:i:s') . "  gestion_animaux.php :error ." . $e->getMessage() . PHP_EOL, 3, "error.log");
     }
 }
 
-$log_file = "file_log.txt";
-try {
-    echo   2 / 0;
-} catch (DivisionByZeroError $e) {
-    error_log("jejj", 3, $log_file);
-}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) || isset($_POST["Habitat"]) || isset($_POST["search"]) )) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) || isset($_POST["Habitat"]) || isset($_POST["search"]))) {
 
     if ($_POST["type-Alimentaire"] == "Tout-Type-Alimentaire"  && $_POST["Habitat"] == "Tout Habitat") {
         $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a , habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%'";
@@ -65,8 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
     } else   $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a ,
          habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%' and a.IdHab='" . $_POST["Habitat"] . "'
           and a.Type_alimentaire='" . $_POST["type-Alimentaire"] . "'";
-    $resultat = $cennect->query($sql);
-    $array_animal = $resultat->fetch_all();
+    try {
+        $resultat = $cennect->query($sql);
+        $array_animal = $resultat->fetch_all() ?? [];
+    } catch (Exception $e) {
+        error_log(date('y-m-d h:i:s') . "  gestion_animaux.php :error ." . $e->getMessage() . PHP_EOL, 3, "error.log");
+    }
 }
 ?>
 
@@ -217,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                                         </div>
                                         <input name="search"
                                             class="form-input h-full w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg border border-border-light bg-card-light pl-2 text-base font-normal leading-normal text-text-light-primary placeholder:text-text-light-secondary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary dark:placeholder:text-text-dark-secondary"
-                                            placeholder="Rechercher un animal..."  />
+                                            placeholder="Rechercher un animal..." />
                                     </div>
                                 </label>
                             </div>
@@ -298,11 +299,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
 
         </div>
         <section id="formulaire-animal-container"
-            class="mx-auto <?= $hidden ?>  fixed inset-0 z-50 overflow-y-auto bg-background-light/80 backdrop-blur-sm position: fixed w-full bg-background-light   right: 0    "
-            style="width: 600px;">
+            class="mx-auto <?= $hidden ?>  fixed inset-0 z-50 overflow-y-auto bg-background-light/80 backdrop-blur-sm position: fixed  bg-background-light   left-[270px] right: 0    ">
 
             <div class="rounded-xl bg-white p-6 shadow-sm dark:bg-primary-dark sm:p-8 md:p-10">
-                <form action="<?= $action ?>" method="POST" enctype="multipart/form-data"
+                <form id="form-model" action="<?= $action ?>" method="POST" enctype="multipart/form-data"
                     class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
 
                     <!-- Nom de l’animal -->
@@ -319,7 +319,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                     <div class="md:col-span-2">
                         <label class="flex flex-col" for="description">
                             <span class="pb-2 text-base font-medium">Description de l'animal</span>
-                            <textarea name="description" rows="5"
+                            <textarea name="Description_animal" rows="5"
                                 class="w-full min-w-0 resize-none rounded-lg border border-gray-300 bg-background-light px-4 py-3 text-base font-normal placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:placeholder:text-gray-400 dark:focus:border-accent"
                                 id="description"
                                 placeholder="Décrivez l’animal, son caractère, ses particularités physiques, son histoire…"><?= $descriptionAnimal ?></textarea>
@@ -389,13 +389,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                     <!-- Boutons -->
                     <div
                         class="mt-6 flex flex-col-reverse items-center gap-4 border-t border-gray-200 pt-6 dark:border-gray-700 md:col-span-2 md:flex-row md:justify-end">
-                        <form action="" method="GET">
-                            <button id="annuler-animal"
-                                class="h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-transparent px-6 text-base font-bold text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 md:w-auto"
-                                type="submit">
-                                Annuler
-                            </button>
-                        </form>
+                        <button id="annuler-animal"
+                            class="h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-transparent px-6 text-base font-bold text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 md:w-auto"
+                            type="button">
+                            Annuler
+                        </button>
                         <button id="enregistrer-animal"
                             class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:bg-accent dark:text-primary dark:hover:bg-accent/90 dark:focus:ring-accent/50 md:w-auto"
                             type="submit">
@@ -407,6 +405,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
             </div>
         </section>
     </div>
+    <script>
+        document.getElementById("annuler-animal").addEventListener('click', () => {
+            document.getElementById('form-model').setAttribute("action", "php/ajouter_animal.php");
+            document.getElementById('form-model').reset();
+            document.getElementById("formulaire-animal-container").classList.toggle("hidden");
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $("button[target='delete']").on('click', function() {
