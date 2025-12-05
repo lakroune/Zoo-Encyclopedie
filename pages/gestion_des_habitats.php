@@ -102,13 +102,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
           </a>
           <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
             href="gestion_des_animaux.php">
-            <span class="material-symbols-outlined text-text-light dark:text-text-dark">eco</span>
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
             <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
               animaux</span>
           </a>
           <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30"
             href="gestion_des_habitats.php">
-            <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">eco</span>
             <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
               habitats</span>
           </a>
@@ -280,7 +280,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
               <!-- Boutons -->
               <div class="flex flex-col-reverse sm:flex-row gap-3 justify-end p-6 bg-background-light dark:bg-background-dark border-t border-border-light dark:border-border-dark rounded-b-xl">
                 <form action="">
-                  <button type="button"
+                  <button type="submit"
                     id="annuler-habitat"
                     class="h-12 px-6 rounded-lg bg-transparent border border-border-light dark:border-border-dark text-text-light dark:text-text-dark font-bold hover:bg-primary/10 dark:hover:bg-primary/20 transition">
                     Annuler

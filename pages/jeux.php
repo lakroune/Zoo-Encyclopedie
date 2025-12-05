@@ -104,7 +104,7 @@ $succes = $array_jeux[rand(0, 2)];
                 style="font-variation-settings: 'FILL' 1;">dashboard</span>
               <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Accueil </span>
             </a>
-            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30" href="gestion_des_animaux.php">
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20" href="gestion_des_animaux.php">
               <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
               <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
                 animaux</span>
@@ -120,7 +120,7 @@ $succes = $array_jeux[rand(0, 2)];
               <span class="material-symbols-outlined text-text-light dark:text-text-dark">bar_chart</span>
               <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Statistiques</span>
             </a>
-            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30"
               href="jeux.php">
               <span class="material-symbols-outlined text-text-light dark:text-text-dark">joystick</span>
               <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Jeu

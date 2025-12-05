@@ -22,7 +22,7 @@ $Description_animal = $animal["Description_animal"] ? $animal["Description_anima
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Accueil    — Zoo Manager</title>
+    <title>Accueil — Zoo Manager</title>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -91,17 +91,19 @@ $Description_animal = $animal["Description_animal"] ? $animal["Description_anima
                 </div>
 
                 <nav class="mt-4 flex flex-col gap-1">
-                    <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 transition"
-                        href="index.php">
-                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                        <span class="text-sm font-semibold">Accueil  </span>
-                    </a>
 
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20"
-                        href="gestion_des_animaux.php">
-                        <span class="material-symbols-outlined">pets</span>
-                        <span class="text-sm font-semibold">Gestion des animaux</span>
+                        href="index.php">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <span class="text-sm font-semibold">Accueil</span>
                     </a>
+                    <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 transition"
+                        href="gestion_des_animaux.php">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pets</span>
+                        <span class="text-sm font-semibold"> Gestion des animaux</span>
+                    </a>
+
+
 
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 transition"
                         href="gestion_des_habitats.php">
@@ -123,7 +125,7 @@ $Description_animal = $animal["Description_animal"] ? $animal["Description_anima
                 </nav>
             </div>
 
-            
+
 
         </aside>
 

@@ -17,29 +17,39 @@ $hidden = "hidden";
 $NomAnimal = "";
 $Url_image = "";
 $descriptionAnimal = '';
-$IdAnimal = 0;
+$idHab = 0;
 $typeRegime = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter'])) {
+    $hidden = "block";
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['IdAnimal'])) {
     $hidden = "block";
     $IdAnimal = (int)$_POST['IdAnimal'];
     $action = "php/modifier_animal.php?IdAnimal=" . $IdAnimal;
-
-    $sql = " select * from  animal where IdAnimal= " . $IdAnimal;
-
     try {
+        $sql = " select * from  animal where IdAnimal= " . $IdAnimal;
         $resultat = $cennect->query($sql);
         $animal_modify = $resultat->fetch_assoc();
         $NomAnimal =   $animal_modify['NomAnimal'];
         $url_image =   $animal_modify['Url_image'];
         $descriptionAnimal =  $animal_modify['Description_animal'];
         $typeRegime =  $animal_modify['Type_alimentaire'];
+        $idHab = (int) $animal_modify['IdHab'];
     } catch (Exception $e) {
         print('Erreur de connexion à la base de données.');
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($_POST["type-Alimentaire"]) || isset($_POST["Habitat"]) || $_POST['search'])) {
+$log_file = "file_log.txt";
+try {
+    echo   2 / 0;
+} catch (DivisionByZeroError $e) {
+    error_log("jejj", 3, $log_file);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) || isset($_POST["Habitat"]) || isset($_POST["search"]) )) {
 
     if ($_POST["type-Alimentaire"] == "Tout-Type-Alimentaire"  && $_POST["Habitat"] == "Tout Habitat") {
         $sql = "   select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a , habitat as h where  a.IdHab=h.IdHab and a.NomAnimal LIKE    '" . $_POST['search'] . "%'";
@@ -141,7 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                         href="index.php">
                         <span class="material-symbols-outlined text-text-light dark:text-text-dark"
                             style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                        <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Accueil </span>
+                        <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Accueil
+                        </span>
                     </a>
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30"
                         href="gestion_des_animaux.php">
@@ -184,11 +195,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                                 class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
                                 Gérez tous les animaux de votre zoo en un seul endroit.</p>
                         </div>
-                        <button id="ajouter-animal"
-                            class="hidden h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold leading-normal tracking-[0.015em] text-text-light-primary sm:flex">
-                            <span class="material-symbols-outlined">add</span>
-                            <span class="truncate">Ajouter un Animal</span>
-                        </button>
+                        <form action="" method="POST">
+                            <input type="hidden" value="ajouter" name="ajouter">
+                            <button id="ajouter-animal"
+                                class="hidden h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold leading-normal tracking-[0.015em] text-text-light-primary sm:flex">
+                                <span class="material-symbols-outlined">add</span>
+                                <span class="truncate">Ajouter un Animal</span>
+                            </button>
+                        </form>
                     </header>
                     <form action="" method="POST">
                         <div class="mt-8 flex flex-col gap-4 md:flex-row md:items-center">
@@ -203,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                                         </div>
                                         <input name="search"
                                             class="form-input h-full w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg border border-border-light bg-card-light pl-2 text-base font-normal leading-normal text-text-light-primary placeholder:text-text-light-secondary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary dark:placeholder:text-text-dark-secondary"
-                                            placeholder="Rechercher un animal..." value="" />
+                                            placeholder="Rechercher un animal..."  />
                                     </div>
                                 </label>
                             </div>
@@ -284,7 +298,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
 
         </div>
         <section id="formulaire-animal-container"
-            class="mx-auto <?= $hidden ?> max-w-4xl fixed inset-0 z-50 overflow-y-auto bg-background-light/80 backdrop-blur-sm position: fixed w-full bg-background-light   right: 0    ">
+            class="mx-auto <?= $hidden ?>  fixed inset-0 z-50 overflow-y-auto bg-background-light/80 backdrop-blur-sm position: fixed w-full bg-background-light   right: 0    "
+            style="width: 600px;">
 
             <div class="rounded-xl bg-white p-6 shadow-sm dark:bg-primary-dark sm:p-8 md:p-10">
                 <form action="<?= $action ?>" method="POST" enctype="multipart/form-data"
@@ -296,8 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                             <span class="pb-2 text-base font-medium">Nom de l'animal</span>
                             <input name="nomAnimal"
                                 class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 text-base font-normal placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:placeholder:text-gray-400 dark:focus:border-accent"
-                                id="animal-name" placeholder="Par exemple, Léo le Lion"
-                                value="<?= $NomAnimal; ?>" />
+                                id="animal-name" placeholder="Par exemple, Léo le Lion" value="<?= $NomAnimal; ?>" />
                         </label>
                     </div>
 
@@ -305,8 +319,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                     <div class="md:col-span-2">
                         <label class="flex flex-col" for="description">
                             <span class="pb-2 text-base font-medium">Description de l'animal</span>
-                            <textarea name="description"
-                                rows="5"
+                            <textarea name="description" rows="5"
                                 class="w-full min-w-0 resize-none rounded-lg border border-gray-300 bg-background-light px-4 py-3 text-base font-normal placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:placeholder:text-gray-400 dark:focus:border-accent"
                                 id="description"
                                 placeholder="Décrivez l’animal, son caractère, ses particularités physiques, son histoire…"><?= $descriptionAnimal ?></textarea>
@@ -322,9 +335,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                                     class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 pr-10 text-base font-normal focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:focus:border-accent"
                                     id="diet">
                                     <option value="" disabled>Sélectionnez un régime</option>
-                                    <option value="carnivore" <?= (isset($typeRegime) && $typeRegime == 'carnivore') ? 'selected' : '' ?>>Carnivore</option>
-                                    <option value="herbivore" <?= (isset($typeRegime) && $typeRegime == 'herbivore') ? 'selected' : '' ?>>Herbivore</option>
-                                    <option value="omnivore" <?= (isset($typeRegime) && $typeRegime == 'omnivore') ? 'selected' : '' ?>>Omnivore</option>
+                                    <option value="carnivore" <?= (isset($typeRegime) && $typeRegime == 'carnivore')
+                                                                    ? 'selected' : '' ?>>Carnivore</option>
+                                    <option value="herbivore" <?= (isset($typeRegime) && $typeRegime == 'herbivore')
+                                                                    ? 'selected' : '' ?>>Herbivore</option>
+                                    <option value="omnivore" <?= (isset($typeRegime) && $typeRegime == 'omnivore')
+                                                                    ? 'selected' : '' ?>>Omnivore</option>
                                 </select>
                             </div>
                         </label>
@@ -351,27 +367,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                     </div>
 
                     <!-- Photo de l’animal -->
-                    <div class="md:col-span-2">
+                    <div class="md:col-span-2 max-w-2xl" style="width: 250px;">
                         <label class="pb-2 text-base font-medium" for="animal-photo">Photo de l'animal</label>
-                        <div id="image-preview" style="background-image:url('images/<?= $url_image ?>');" class="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg border-2 border-dashed border-gray-300 px-6 py-10 transition-colors hover:border-primary dark:border-gray-600 dark:hover:border-accent">
+                        <div id="image-preview"
+                            style="background-image:url('images/<?= $url_image ?>');  background-size: cover;"
+                            class="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg border-2 border-dashed border-gray-300 px-6 py-10 transition-colors hover:border-primary dark:border-gray-600 dark:hover:border-accent">
                             <span class="material-symbols-outlined text-4xl text-primary dark:text-primary-light">
                                 cloud_upload
                             </span>
                             <div class="flex max-w-md flex-col items-center gap-1 text-center">
-                                <p class="text-base font-bold text-gray-700 dark:text-gray-200">Cliquez ou glissez-déposez une photo</p>
-                                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">PNG, JPG, GIF jusqu’à 10Mo</p>
+                                <p class="text-base font-bold text-gray-700 dark:text-gray-200">Cliquez ou
+                                    glissez-déposez une photo</p>
+                                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">PNG, JPG, GIF jusqu’à
+                                    10Mo</p>
                             </div>
-                            <input name="image" type="file" class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-                                id="image_animal">
+                            <input name="image" type="file"
+                                class="absolute inset-0 h-full w-full cursor-pointer opacity-0" id="image_animal">
                         </div>
                     </div>
 
                     <!-- Boutons -->
-                    <div class="mt-6 flex flex-col-reverse items-center gap-4 border-t border-gray-200 pt-6 dark:border-gray-700 md:col-span-2 md:flex-row md:justify-end">
-                        <form action="">
+                    <div
+                        class="mt-6 flex flex-col-reverse items-center gap-4 border-t border-gray-200 pt-6 dark:border-gray-700 md:col-span-2 md:flex-row md:justify-end">
+                        <form action="" method="GET">
                             <button id="annuler-animal"
                                 class="h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-transparent px-6 text-base font-bold text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 md:w-auto"
-                                type="button">
+                                type="submit">
                                 Annuler
                             </button>
                         </form>
@@ -410,26 +431,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
     <script src="js/script2.js"></script>
     <!-- Script pour l'aperçu de l'image -->
     <script>
-        document.getElementById('image_animal')?.addEventListener('change', function(e) {
+        document.getElementById('image_animal').addEventListener('change', function(e) {
             const file = e.target.files[0];
             const preview = document.getElementById('image-preview');
-            const container = document.getElementById('preview-container');
 
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     preview.style.backgroundImage = `url('${e.target.result}')`;
-                    preview.style.backgroundSize = 'cover';
-                    preview.style.backgroundPosition = 'center';
-                    preview.style.backgroundRepeat = 'no-repeat';
-
-                    // Cache le texte par défaut
                     placeholder.style.display = 'none';
                     container.classList.remove('hidden');
                 }
                 reader.readAsDataURL(file);
             } else {
-                container.classList.add('hidden');
                 preview.src = '';
             }
         });

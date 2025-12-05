@@ -25,9 +25,9 @@ $Omnivore_count = 0;
 $Carnivore_count = 0;
 
 foreach ($array_Type_alimentaire as $type_alimentaire) {
-  if ($type_alimentaire[0] == "herbivore")
+  if (strtolower($type_alimentaire[0]) == strtolower("Herbivore"))
     $Herbivore_count = $type_alimentaire[1];
-  else  if ($type_alimentaire[0] == "omnivore")
+  else  if (strtolower($type_alimentaire[0]) == strtolower("Omnivore"))
     $Omnivore_count = $type_alimentaire[1];
   else
     $Carnivore_count = $type_alimentaire[1];
@@ -136,10 +136,12 @@ $total_types = 3;
               style="font-variation-settings: 'FILL' 1;">dashboard</span>
             <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Accueil </span>
           </a>
-          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30"
+
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
             href="gestion_des_animaux.php">
             <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
-            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
+            <span
+              class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
               animaux</span>
           </a>
           <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
@@ -148,11 +150,10 @@ $total_types = 3;
             <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
               habitats</span>
           </a>
-          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30"
             href="Statistiques.php">
             <span class="material-symbols-outlined text-text-light dark:text-text-dark">bar_chart</span>
-            <span
-              class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Statistiques</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Statistiques</span>
           </a>
           <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
             href="jeux.php">
@@ -224,7 +225,7 @@ $total_types = 3;
               <?php foreach ($array_circle as $type_alimentaire) { ?>
                 <div class="flex items-center gap-2">
                   <div class="h-3 w-3 rounded-full bg-[<?= $type_alimentaire[2] ?>]"></div>
-                  <span class="text-gray-700 dark:text-gray-300"><?= $type_alimentaire[3]." ".$type_alimentaire[0] ?>%</span>
+                  <span class="text-gray-700 dark:text-gray-300"><?= $type_alimentaire[3] . " " . $type_alimentaire[0] ?>%</span>
                 </div>
               <?php } ?>
             </div>
