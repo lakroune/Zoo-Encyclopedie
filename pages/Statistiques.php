@@ -19,7 +19,7 @@ $stats_habitats = $resultat->fetch_all();
 $sql = "select Type_alimentaire,count(Type_alimentaire)  as counttype from animal group by Type_alimentaire";
 $resultat = $cennect->query($sql);
 $array_Type_alimentaire = $resultat->fetch_all();
-
+$total_types = count($array_Type_alimentaire);
 $Herbivore_count = 0;
 $Omnivore_count = 0;
 $Carnivore_count = 0;
@@ -57,7 +57,7 @@ array_push($array_circle, [$Carnivore_percentage, $Carnivore_offset, "#F87171", 
 
 
 
-$total_types = 3;
+
 
 
 ?>
@@ -123,10 +123,10 @@ $total_types = 3;
           <div class="flex flex-col">
             <h1
               class="text-base font-medium leading-normal text-text-light-primary dark:text-text-dark-primary">
-              Zoo Manager</h1>
+              Zoo Encyclopedie</h1>
             <p
               class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
-              Application de Gestion</p>
+              Application éducatif</p>
           </div>
         </div>
         <nav class="mt-4 flex flex-col gap-1">

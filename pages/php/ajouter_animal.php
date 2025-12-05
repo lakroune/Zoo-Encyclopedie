@@ -2,7 +2,7 @@
 
 
 include "../db_connect.php";
-if ($_SERVER['REQUEST_METHOD'] === "POST"  && isset($_POST['type-regime'], $_POST['nomAnimal'], $_POST['idHab'])) {
+if ($_SERVER['REQUEST_METHOD'] === "POST"  && isset($_POST['type-regime'], $_POST['Description_animal'], $_POST['nomAnimal'], $_POST['idHab']) && (trim($_POST['nomAnimal']) != "" && trim($_POST['Description_animal']) != "")) {
 
     $Url_image = "";
     $isUpload = true;
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"  && isset($_POST['type-regime'], $_POS
     } else  header("Location: ../gestion_des_animaux.php?upload=2");
 
     if ($isUpload) {
-        $sql = " insert into  Animal (Description_animal,NomAnimal, Type_alimentaire, Url_image, IdHab) value ('" . $_POST['Description_animal'] . "','" . $_POST['nomAnimal'] . "' ,'" . $_POST['type-regime'] . "','" . $Url_image . "'," . $_POST['idHab'] . ")";
+        $sql = " insert into  Animal (Description_animal,NomAnimal, Type_alimentaire, Url_image, IdHab) value ('" . trim($_POST['Description_animal']) . "','" . trim($_POST['nomAnimal']) . "' ,'" . trim($_POST['type-regime']) . "','" . $Url_image . "'," . trim($_POST['idHab']) . ")";
 
         try {
             $resultat = $cennect->query($sql);

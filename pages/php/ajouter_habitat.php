@@ -1,7 +1,7 @@
 <?php
 
 include "../db_connect.php";
-if ($_SERVER['REQUEST_METHOD'] === "POST"  && isset($_POST['name'], $_POST['description'], $_FILES['image_habitat'])) {
+if ($_SERVER['REQUEST_METHOD'] === "POST"  && isset($_POST['name'], $_POST['description'], $_FILES['image_habitat']) && (trim($_POST['name']) != "" && trim($_POST['description']) != "")) {
 
     $Url_image = "";
     $isUpload = true;
@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"  && isset($_POST['name'], $_POST['desc
 
     if ($isUpload) {
 
-        $name = $_POST['name'];
-        $description = $_POST['description'];
+        $name = trim($_POST['name']);
+        $description = trim($_POST['description']);
         $sql = "insert into habitat (NomHab, Description_Hab,Url_image) values ('$name', '$description','$Url_image')";
         try {
             $resultat = $cennect->query($sql);

@@ -2,20 +2,30 @@
 
 
 include "db_connect.php";
-
-$sql = " select a.IdAnimal ,a.Description_animal,a.NomAnimal, a.Type_alimentaire ,h.NomHab,h.idHab
-,a.Url_image from animal as a join habitat as h where  a.IdHab=h.IdHab order by rand() limit 1";
-$resultat = $cennect->query($sql);
-if ($resultat->num_rows >= 1) {
-    $animal = $resultat->fetch_assoc();
-    $NomAnimal = $animal["NomAnimal"];
-    $Type_alimentaire = $animal["Type_alimentaire"];
-    $NomHab = $animal["NomHab"];
-    $Url_image = $animal["Url_image"];
-    $idHab = $animal["idHab"];
-    $Description_animal = $animal["Description_animal"];
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['idHab']) && !empty(trim($_GET['idHab']))) {
+    $idHab = $_GET['idHab'];
+    $sql = " select * from  habitat where idHab=$idHab";
+    $resultat = $cennect->query($sql);
+    if ($resultat->num_rows == 1) {
+        $habitat = $resultat->fetch_assoc();
+        $NomHab = $habitat["NomHab"];
+        $Url_image = $habitat["Url_image"];
+        $Description_habitat = $habitat["Description_Hab"];
+    }
 }
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $sql = " select * from habitat  order by rand() limit 1";
+    $resultat = $cennect->query($sql);
+    if ($resultat->num_rows == 1) {
+        $habitat = $resultat->fetch_assoc();
+        $NomHab = $habitat["NomHab"];
+        $Url_image = $habitat["Url_image"];
+        $Description_habitat = $habitat["Description_Hab"];
+    }
+}
 ?>
 
 
@@ -141,13 +151,13 @@ if ($resultat->num_rows >= 1) {
                     <div class="mx-auto max-w-7xl">
 
                         <div class="mb-8 flex items-center justify-between">
-                            <h1 class="text-3xl font-bold">En savoir plus sur cet animal</h1>
-
+                            <h1 class="text-3xl font-bold">En savoir plus sur cet habitat</h1>
                             <div class="flex items-center gap-4">
-                                <form action="">
+                                <form action="" method="POST">
+                                    <input type="hidden" value="<?= $idHab ?>" name="idHab">
                                     <button class="flex items-center justify-center gap-2 rounded-lg h-11 px-4 border border-border-light dark:border-border-dark font-bold hover:bg-border-light dark:hover:bg-border-dark transition">
                                         <span class="material-symbols-outlined"">casino</span>
-                                    <span class=" truncate">Suivant</span>
+                                        <span class=" truncate">Suivant</span>
                                     </button>
                                 </form>
                             </div>
@@ -156,7 +166,7 @@ if ($resultat->num_rows >= 1) {
                         <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
 
                             <!-- IMAGE -->
-                            <div class="lg:col-span-3 w-full aspect-[4/3] bg-center bg-cover rounded-md shadow-md"
+                            <div class="lg:col-span-3 w-full aspect-[4/3] bg-center bg-cover rounded-xl shadow-md"
                                 style='background-image: url("images/<?= $Url_image ?>");'>
                             </div>
 
@@ -164,7 +174,7 @@ if ($resultat->num_rows >= 1) {
                             <div class="lg:col-span-2 flex flex-col gap-6">
 
                                 <div class="flex items-start justify-between">
-                                    <h2 class="text-3xl md:text-3xl font-black" id="text-to-read"><?= $NomAnimal ?></h2>
+                                    <h2 class="text-3xl md:text-3xl font-black" id="text-to-read"><?= $NomHab ?></h2>
 
                                     <button onclick="readText()" class="flex items-center justify-center h-10 w-10 rounded-full bg-primary/20 hover:bg-primary/30 transition">
                                         <span class="material-symbols-outlined">volume_up</span>
@@ -173,27 +183,6 @@ if ($resultat->num_rows >= 1) {
 
                                 <div class="flex flex-col gap-4 border-y py-6 border-border-light dark:border-border-dark">
 
-                                    <!-- Diet -->
-                                    <div class="flex items-start gap-4">
-                                        <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/20">
-                                            <span class="material-symbols-outlined text-primary text-3xl">restaurant</span>
-                                        </div>
-                                        <div>
-                                            <h3 class="font-bold">Type alimentaire</h3>
-                                            <p class="text-text-muted-light dark:text-text-muted-dark"><?= $Type_alimentaire ?></p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Habitat -->
-                                    <div class="flex items-start gap-4">
-                                        <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/20">
-                                            <span class="material-symbols-outlined text-primary text-3xl">public</span>
-                                        </div>
-                                        <div>
-                                            <h3 class="font-bold">Habitat assigné</h3>
-                                            <a class="text-primary hover:underline" href="./habitat.php?idHab=<?= $idHab ?>"><?= $NomHab ?></a>
-                                        </div>
-                                    </div>
 
                                 </div>
 
@@ -201,7 +190,7 @@ if ($resultat->num_rows >= 1) {
                                 <div class="flex flex-col gap-3">
                                     <h3 class="font-bold text-lg">Description</h3>
                                     <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">
-                                        <?= $Description_animal ?>
+                                        <?= $Description_habitat ?>
                                     </p>
                                 </div>
 
@@ -215,15 +204,15 @@ if ($resultat->num_rows >= 1) {
                     <div class="mx-auto max-w-7xl text-center py-16">
 
                         <div class="w-24 h-24 mx-auto mb-6 flex items-center justify-center rounded-full bg-red-100 dark:bg-red-900/50">
-                            <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-5xl">pets</span>
+                            <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-5xl">eco</span>
                         </div>
 
                         <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
-                            Oups ! Animal Introuvable
+                            Oups ! Habitat Introuvable
                         </h1>
 
                         <p class="text-lg text-text-muted-light dark:text-text-muted-dark mb-8 max-w-lg mx-auto">
-                            Désolé, mais l'animal que vous cherchez n'a pas pu être trouvé dans notre base de données.
+                            Désolé, mais l'habitat que vous cherchez n'a pas pu être trouvé dans notre base de données.
                         </p>
 
 
@@ -280,8 +269,7 @@ if ($resultat->num_rows >= 1) {
     <script>
         function readText() {
             if ('speechSynthesis' in window) {
-                const textInput = "  <?= $NomAnimal ?>... est un animal <?= $Type_alimentaire ?>, son habitat est   <?= $NomHab ?>."
-
+                const textInput = "  <?= $NomHab ?>... est un habitat   <?= $Description_habitat ?>."
                 const utterance = new SpeechSynthesisUtterance(textInput);
                 utterance.lang = 'fr';
                 utterance.pitch = 0.1;

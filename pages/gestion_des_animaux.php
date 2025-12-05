@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter'])) {
     $hidden = "block";
 }
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['IdAnimal'])) {
     $hidden = "block";
     $IdAnimal = (int)$_POST['IdAnimal'];
@@ -141,10 +142,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                     <div class="flex flex-col">
                         <h1
                             class="text-base font-medium leading-normal text-text-light-primary dark:text-text-dark-primary">
-                            Zoo Manager</h1>
+                            Zoo Encyclopedie</h1>
                         <p
                             class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
-                            Application de Gestion</p>
+                            Application éducatif</p>
                     </div>
                 </div>
                 <nav class="mt-4 flex flex-col gap-1">
@@ -185,74 +186,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
         </aside>
         <div class="flex-1 flex flex-col">
 
-            <main class="flex-1 p-4 sm:p-6 lg:p-8 position : relative">
+            <main class="flex-1 p-4 sm:p-6 lg:p-8    ">
                 <div class="mx-auto max-w-7xl   position : relative ">
-                    <header class="flex flex-wrap items-center justify-between gap-4">
-                        <div class="flex flex-col gap-1">
-                            <h1
-                                class="text-4xl font-black leading-tight tracking-[-0.033em] text-text-light-primary dark:text-text-dark-primary">
-                                Tableau de bord des Animaux</h1>
-                            <p
-                                class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
-                                Gérez tous les animaux de votre zoo en un seul endroit.</p>
-                        </div>
-                        <form action="" method="POST">
-                            <input type="hidden" value="ajouter" name="ajouter">
-                            <button id="ajouter-animal"
-                                class="hidden h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold leading-normal tracking-[0.015em] text-text-light-primary sm:flex">
-                                <span class="material-symbols-outlined">add</span>
-                                <span class="truncate">Ajouter un Animal</span>
-                            </button>
-                        </form>
-                    </header>
-                    <form action="" method="POST">
-                        <div class="mt-8 flex flex-col gap-4 md:flex-row md:items-center">
-                            <div class="flex-grow">
-                                <label class="flex h-12 w-full min-w-40 flex-col">
-                                    <div class="flex h-full w-full flex-1 items-stretch rounded-lg">
-                                        <div
-                                            class="flex items-center justify-center rounded-l-lg border-y border-l border-border-light bg-card-light pl-4 text-text-light-secondary dark:border-border-dark dark:bg-card-dark dark:text-text-dark-secondary">
-                                            <button type="submit">
-                                                <span class="material-symbols-outlined">search</span>
-                                            </button>
+                    <div class=" mt-[-35px] p-[15px] z-10 position: fixed  left-[260px] right-[30px] bg-background-light">
+                        <header class="flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex flex-col gap-1">
+                                <h1
+                                    class="text-4xl font-black leading-tight tracking-[-0.033em] text-text-light-primary dark:text-text-dark-primary">
+                                    Tableau de bord des Animaux</h1>
+                                <p
+                                    class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
+                                    Gérez tous les animaux de votre zoo en un seul endroit.</p>
+                            </div>
+                            <form action="" method="POST">
+                                <input type="hidden" value="ajouter" name="ajouter">
+                                <button id="ajouter-animal"
+                                    class="hidden h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold leading-normal tracking-[0.015em] text-text-light-primary sm:flex">
+                                    <span class="material-symbols-outlined">add</span>
+                                    <span class="truncate">Ajouter un Animal</span>
+                                </button>
+                            </form>
+                        </header>
+                        <form action="" method="POST" class="position: relative">
+                            <div class="mt-8 flex flex-col gap-4 md:flex-row md:items-center">
+                                <div class="flex-grow">
+                                    <label class="flex h-12 w-full min-w-40 flex-col">
+                                        <div class="flex h-full w-full flex-1 items-stretch rounded-lg">
+                                            <div
+                                                class="flex items-center justify-center rounded-l-lg border-y border-l border-border-light bg-card-light pl-4 text-text-light-secondary dark:border-border-dark dark:bg-card-dark dark:text-text-dark-secondary">
+                                                <button type="submit">
+                                                    <span class="material-symbols-outlined">search</span>
+                                                </button>
+                                            </div>
+                                            <input name="search"
+                                                class="form-input h-full w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg border border-border-light bg-card-light pl-2 text-base font-normal leading-normal text-text-light-primary placeholder:text-text-light-secondary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary dark:placeholder:text-text-dark-secondary"
+                                                placeholder="Rechercher un animal..." />
                                         </div>
-                                        <input name="search"
-                                            class="form-input h-full w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg border border-border-light bg-card-light pl-2 text-base font-normal leading-normal text-text-light-primary placeholder:text-text-light-secondary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary dark:placeholder:text-text-dark-secondary"
-                                            placeholder="Rechercher un animal..." />
+                                    </label>
+                                </div>
+                                <div class="flex flex-wrap gap-4">
+                                    <div class="flex-1">
+                                        <label class="sr-only" for="habitat-filter">Filtrer par Habitat</label>
+                                        <select name="Habitat"
+                                            class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary"
+                                            id="habitat-filter">
+                                            <option selected="">Tout Habitat</option>
+                                            <?php
+                                            foreach ($array_habitat as $habitat) {
+                                                echo "  <option value='" . $habitat[0] . "'>" . $habitat[1] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
-                                </label>
-                            </div>
-                            <div class="flex flex-wrap gap-4">
-                                <div class="flex-1">
-                                    <label class="sr-only" for="habitat-filter">Filtrer par Habitat</label>
-                                    <select name="Habitat"
-                                        class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary"
-                                        id="habitat-filter">
-                                        <option selected="">Tout Habitat</option>
-                                        <?php
-                                        foreach ($array_habitat as $habitat) {
-                                            echo "  <option value='" . $habitat[0] . "'>" . $habitat[1] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="flex-1">
-                                    <label class="sr-only" for="diet-filter">Filtrer par Type Alimentaire</label>
-                                    <select name="type-Alimentaire"
-                                        class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary"
-                                        id="diet-filter">
-                                        <option value="Tout-Type-Alimentaire" selected>Tout Type Alimentaire</option>
-                                        <option value="Carnivore">Carnivore</option>
-                                        <option value="Herbivore">Herbivore</option>
-                                        <option value="Omnivore">Omnivore</option>
-                                    </select>
+                                    <div class="flex-1">
+                                        <label class="sr-only" for="diet-filter">Filtrer par Type Alimentaire</label>
+                                        <select name="type-Alimentaire"
+                                            class="form-select h-12 w-full min-w-[180px] rounded-lg border border-border-light bg-card-light pr-8 text-sm font-medium text-text-light-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-border-dark dark:bg-card-dark dark:text-text-dark-primary"
+                                            id="diet-filter">
+                                            <option value="Tout-Type-Alimentaire" selected>Tout Type Alimentaire</option>
+                                            <option value="Carnivore">Carnivore</option>
+                                            <option value="Herbivore">Herbivore</option>
+                                            <option value="Omnivore">Omnivore</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <div class="mt-8 grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6">
+                        </form>
+                    </div>
+                    <div class="h-[110px]">
+                    </div>
+                    <div class="mt-8 grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-3">
 
-                        <?php foreach ($array_animal as $animal) { ?>
+                        <?php
+                        if (count($array_animal))
+
+                            foreach ($array_animal as $animal) { ?>
                             <div
                                 class="group flex flex-col gap-4 rounded-xl border border-border-light bg-card-light p-4 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-card-dark dark:hover:shadow-primary/10">
                                 <div class="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat"
@@ -278,15 +286,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                                     </p>
                                     <div
                                         class="mt-1 flex items-center gap-4 text-text-light-secondary dark:text-text-dark-secondary">
-                                        <span class="flex items-center gap-1 text-sm"><span
+                                        <span class="flex items-center gap-1 text-[12px]"><span
                                                 class="material-symbols-outlined text-base">grass</span>
                                             <?= $animal["3"] ?>
                                         </span>
-                                        <span class="flex items-center gap-1 text-sm"><span
+                                        <span class="flex items-center gap-1 text-[12px]"><span
                                                 class="material-symbols-outlined text-base">restaurant</span>
                                             <?= $animal["2"] ?>
                                         </span>
                                     </div>
+                                </div>
+                            </div>
+                        <?php }
+                        else { ?>
+                            <div class="lg:col-span-3 xl:col-span-4 col-span-full">
+                                <div class="flex flex-col items-center justify-center p-10 bg-card-light dark:bg-card-dark rounded-xl border border-dashed border-border-light dark:border-border-dark shadow-inner">
+
+                                    <div class="w-16 h-16 mb-4 flex items-center justify-center rounded-full  bg-red-100">
+                                        <span class="material-symbols-outlined text-[red] text-4xl">pets</span>
+                                    </div>
+
+                                    <h2 class="text-xl font-bold text-text-light-primary dark:text-text-dark-primary mb-2">
+                                        Aucun animal trouvé
+                                    </h2>
+
+                                    <p class="text-text-light-secondary dark:text-text-dark-secondary mb-6 text-center max-w-md">
+                                        Il n'y a actuellement aucun animal dans la base de données ou votre recherche/filtre n'a donné aucun résultat.
+                                    </p>
+
                                 </div>
                             </div>
                         <?php } ?>
@@ -299,7 +326,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
 
         </div>
         <section id="formulaire-animal-container"
-            class="mx-auto <?= $hidden ?>  fixed inset-0 z-50 overflow-y-auto bg-background-light/80 backdrop-blur-sm position: fixed  bg-background-light   left-[270px] right: 0    ">
+            class="mx-auto <?= $hidden ?>  fixed inset-0 z-50 overflow-y-auto bg-background-light/80 backdrop-blur-sm position: fixed     left-[270px] right: 0    ">
 
             <div class="rounded-xl bg-white p-6 shadow-sm dark:bg-primary-dark sm:p-8 md:p-10">
                 <form id="form-model" action="<?= $action ?>" method="POST" enctype="multipart/form-data"
@@ -309,7 +336,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                     <div class="md:col-span-2">
                         <label class="flex flex-col" for="animal-name">
                             <span class="pb-2 text-base font-medium">Nom de l'animal</span>
-                            <input name="nomAnimal"
+                            <input name="nomAnimal" required
                                 class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 text-base font-normal placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:placeholder:text-gray-400 dark:focus:border-accent"
                                 id="animal-name" placeholder="Par exemple, Léo le Lion" value="<?= $NomAnimal; ?>" />
                         </label>
@@ -319,7 +346,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                     <div class="md:col-span-2">
                         <label class="flex flex-col" for="description">
                             <span class="pb-2 text-base font-medium">Description de l'animal</span>
-                            <textarea name="Description_animal" rows="5"
+                            <textarea name="Description_animal" rows="5" required
                                 class="w-full min-w-0 resize-none rounded-lg border border-gray-300 bg-background-light px-4 py-3 text-base font-normal placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:placeholder:text-gray-400 dark:focus:border-accent"
                                 id="description"
                                 placeholder="Décrivez l’animal, son caractère, ses particularités physiques, son histoire…"><?= $descriptionAnimal ?></textarea>
@@ -331,7 +358,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                         <label class="flex flex-col" for="diet">
                             <span class="pb-2 text-base font-medium">Régime alimentaire</span>
                             <div class="relative">
-                                <select name="type-regime"
+                                <select name="type-regime" required
                                     class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 pr-10 text-base font-normal focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:focus:border-accent"
                                     id="diet">
                                     <option value="" disabled>Sélectionnez un régime</option>
@@ -367,11 +394,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                     </div>
 
                     <!-- Photo de l’animal -->
-                    <div class="md:col-span-2 max-w-2xl" style="width: 250px;">
+                    <div class="md:col-span-2 max-w-2xl" style="width: 300px;">
                         <label class="pb-2 text-base font-medium" for="animal-photo">Photo de l'animal</label>
                         <div id="image-preview"
-                            style="background-image:url('images/<?= $url_image ?>');  background-size: cover;"
-                            class="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg border-2 border-dashed border-gray-300 px-6 py-10 transition-colors hover:border-primary dark:border-gray-600 dark:hover:border-accent">
+                            style=" background-image:url('images/<?= $url_image ?>');  background-size: cover;"
+                            class="relative w-100  cursor-pointer flex-col items-center gap-4 rounded-lg border-2 border-dashed border-gray-300 px-6 py-10 transition-colors hover:border-primary dark:border-gray-600 dark:hover:border-accent">
                             <span class="material-symbols-outlined text-4xl text-primary dark:text-primary-light">
                                 cloud_upload
                             </span>
@@ -406,13 +433,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
         </section>
     </div>
     <script>
+        function affichemessage() {
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                if (isset($_GET['error'])) {
+                    if ((int)$_GET["error"] == 2) {
+                        echo " alert('Veuillez remplir tous les champs') ";
+                    } else if ((int)$_GET["error"] == 1) {
+                        echo " alert('Erreur sur le serveur ') ";
+                    }
+                }
+                if (isset($_GET['upload'])) {
+                    if ((int)$_GET["upload"] == 1) {
+                        echo " alert('Erreur de téléchargement d\'image') ";
+                    } else if ((int)$_GET["upload"] == 2) {
+                        echo " alert('Sélectionnez une image pour l\'animal') ";
+                    }
+                }
+                if (isset($_GET['success'])) {
+                    if ((int)$_GET["success"] == 1) {
+                        echo "  alert('L\'animal a été ajouté avec succès !')";
+                    } else if ((int)$_GET["success"] == 2) {
+                        echo "  alert('L\'animal a été modifie avec succès !')";
+                    } else if ((int)$_GET["success"] == 3) {
+                        echo "  alert('L\'animal a été supprimé avec succès !')";
+                    }
+                }
+            }
+            ?>
+        }
+
+        setTimeout(affichemessage, 1000);
+
         document.getElementById("annuler-animal").addEventListener('click', () => {
             document.getElementById('form-model').setAttribute("action", "php/ajouter_animal.php");
             document.getElementById('form-model').reset();
             document.getElementById("formulaire-animal-container").classList.toggle("hidden");
         });
-    </script>
-    <script>
+
         $(document).ready(function() {
             $("button[target='delete']").on('click', function() {
                 if (confirm("voullez vous vriement supprimer")) {
@@ -424,32 +482,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["type-Alimentaire"]) 
                             IdAnimal: IdAnimal
                         },
                         success: function(response) {
-
-                            location.reload();
-
+                            location.href = './gestion_des_animaux.php?success=3';
                         }
                     });
                 }
             });
         });
-    </script>
-    <script src="js/script2.js"></script>
-    <!-- Script pour l'aperçu de l'image -->
-    <script>
+
         document.getElementById('image_animal').addEventListener('change', function(e) {
             const file = e.target.files[0];
             const preview = document.getElementById('image-preview');
-
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     preview.style.backgroundImage = `url('${e.target.result}')`;
-                    placeholder.style.display = 'none';
-                    container.classList.remove('hidden');
+                    preview.style.backgroundSize = 'cover';
+                    preview.style.backgroundPosition = 'center';
+                    preview.style.backgroundRepeat = 'no-repeat';
                 }
                 reader.readAsDataURL(file);
-            } else {
-                preview.src = '';
             }
         });
     </script>
