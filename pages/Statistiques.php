@@ -11,18 +11,29 @@ $resultat = $cennect->query($sql);
 $numbre_animal = $resultat->fetch_assoc()["total_animal"];
 
 
-
-$sql = "select Type_alimentaire,count(Type_alimentaire)  as counttype from animal group by Type_alimentaire";
-$resultat = $cennect->query($sql);
-$Carnivore_count = $resultat->fetch_assoc()["counttype"];
-$Omnivore_count = $resultat->fetch_assoc()["counttype"];
-$Herbivore_count = $resultat->fetch_assoc()["counttype"];
 $sql = "select nomhab, count(nomhab) as counthab from habitat h, animal a where a.idhab = h.idhab group by nomhab order by counthab desc;";
 $resultat = $cennect->query($sql);
 $stats_habitats = $resultat->fetch_all();
 
 
+$sql = "select Type_alimentaire,count(Type_alimentaire)  as counttype from animal group by Type_alimentaire";
+$resultat = $cennect->query($sql);
+$array_Type_alimentaire = $resultat->fetch_all();
+
+$Herbivore_count = 0;
+$Omnivore_count = 0;
+$Carnivore_count = 0;
+
+foreach ($array_Type_alimentaire as $type_alimentaire) {
+  if ($type_alimentaire[0] == "herbivore")
+    $Herbivore_count = $type_alimentaire[1];
+  else  if ($type_alimentaire[0] == "omnivore")
+    $Omnivore_count = $type_alimentaire[1];
+  else
+    $Carnivore_count = $type_alimentaire[1];
+}
 $total = $Herbivore_count + $Omnivore_count + $Carnivore_count;
+
 
 if ($total == 0) {
   $Herbivore_percentage = 0;
@@ -34,11 +45,17 @@ if ($total == 0) {
   $Carnivore_percentage = round(($Carnivore_count / $total) * 100);
 }
 
-$Herbivore_offset = 0;
+$Herbivore_offset =  0;
+$Omnivore_offset =  $Herbivore_percentage;
+$Carnivore_offset = ($Herbivore_percentage + $Omnivore_percentage);
 
-$Omnivore_offset = 360 - $Herbivore_percentage;
+$array_circle = array();
 
-$Carnivore_offset = 360 - ($Herbivore_percentage + $Omnivore_percentage);
+array_push($array_circle, [$Herbivore_percentage, $Herbivore_offset, "#34D399", "Herbivore"]);
+array_push($array_circle, [$Omnivore_percentage, $Omnivore_offset, "#FBBF24", "Omnivore"]);
+array_push($array_circle, [$Carnivore_percentage, $Carnivore_offset, "#F87171", "Carnivore"]);
+
+
 
 $total_types = 3;
 
@@ -117,8 +134,7 @@ $total_types = 3;
             href="index.php">
             <span class="material-symbols-outlined text-text-light dark:text-text-dark"
               style="font-variation-settings: 'FILL' 1;">dashboard</span>
-            <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Tableau
-              de bord</span>
+            <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Accueil </span>
           </a>
           <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30"
             href="gestion_des_animaux.php">
@@ -146,14 +162,7 @@ $total_types = 3;
           </a>
         </nav>
       </div>
-      <div class="flex flex-col gap-2">
-        <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-          href="#">
-          <span class="material-symbols-outlined text-text-light dark:text-text-dark">settings</span>
-          <span
-            class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Paramètres</span>
-        </a>
-      </div>
+
     </aside>
     <!-- Main Content -->
     <main class="flex-1 p-8">
@@ -193,30 +202,16 @@ $total_types = 3;
               <div class="relative flex h-52 w-52 items-center justify-center">
                 <svg class="h-full w-full" viewbox="0 0 36 36">
 
+                  <?php foreach ($array_circle as $angle) { ?>
+                    <path class="stroke-[<?= $angle[2] ?>]"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831  a 15.9155 15.9155 0 0 1 0 -31.831 "
+                      fill="none"
+                      stroke-dasharray="<?= $angle[0]  ?>, 100"
+                      stroke-dashoffset="-<?= $angle[1]; ?>"
+                      stroke-width="3">
+                    </path>
+                  <?php  }; ?>
 
-                  <path class="stroke-[#34D399]"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831  a 15.9155 15.9155 0 0 1 0 -31.831 "
-                    fill="none"
-                    stroke-dasharray="<?php echo ($Herbivore_percentage / 100) * 360; ?>, 100"
-                    stroke-dashoffset="-<?php echo $Omnivore_offset; ?>"
-                    stroke-width="3">
-                  </path>
-
-                  <path class="stroke-[#FBBF24]"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    fill="none"
-                    stroke-dasharray="<?php echo ($Omnivore_percentage / 100) * 360; ?>, 100"
-                    stroke-dashoffset="-<?php echo $Omnivore_offset; ?>"
-                    stroke-width="3">
-                  </path>
-
-                  <path class="stroke-[#F87171]"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    fill="none"
-                    stroke-dasharray="<?php echo ($Carnivore_percentage / 100) * 360; ?>, 100"
-                    stroke-dashoffset="-<?php echo $Carnivore_offset; ?>"
-                    stroke-width="3">
-                  </path>
                 </svg>
                 <div class="absolute flex flex-col items-center">
                   <span class="text-3xl font-bold text-gray-900 dark:text-white"><?php echo $total_types; ?></span>
@@ -225,18 +220,13 @@ $total_types = 3;
               </div>
             </div>
             <div class="flex justify-center gap-6 text-sm">
-              <div class="flex items-center gap-2">
-                <div class="h-3 w-3 rounded-full bg-[#34D399]"></div>
-                <span class="text-gray-700 dark:text-gray-300">Herbivore (<?= $Herbivore_percentage ?>%)</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="h-3 w-3 rounded-full bg-[#FBBF24]"></div>
-                <span class="text-gray-700 dark:text-gray-300">Omnivore (<?= $Omnivore_percentage ?>%)</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="h-3 w-3 rounded-full bg-[#F87171]"></div>
-                <span class="text-gray-700 dark:text-gray-300">Carnivore (<?= $Carnivore_percentage ?>%)</span>
-              </div>
+
+              <?php foreach ($array_circle as $type_alimentaire) { ?>
+                <div class="flex items-center gap-2">
+                  <div class="h-3 w-3 rounded-full bg-[<?= $type_alimentaire[2] ?>]"></div>
+                  <span class="text-gray-700 dark:text-gray-300"><?= $type_alimentaire[3]." ".$type_alimentaire[0] ?>%</span>
+                </div>
+              <?php } ?>
             </div>
           </div>
           <div

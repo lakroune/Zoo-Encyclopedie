@@ -3,9 +3,14 @@ include "db_connect.php";
 
 
 $action = "php/ajouter_animal.php";
+
+$sql = " select * from  habitat";
+$resultat = $cennect->query($sql);
+$array_habitat = $resultat->fetch_all();
+
+
 $sql = " select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a join habitat as h where  a.IdHab=h.IdHab";
 $resultat = $cennect->query($sql);
-
 $array_animal = $resultat->fetch_all();
 
 $hidden = "hidden";
@@ -13,7 +18,7 @@ $NomAnimal = "";
 $Url_image = "";
 $descriptionAnimal = '';
 $IdAnimal = 0;
-$typeRegime="";
+$typeRegime = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['IdAnimal'])) {
     $hidden = "block";
@@ -28,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['IdAnimal'])) {
         $NomAnimal =   $animal_modify['NomAnimal'];
         $url_image =   $animal_modify['Url_image'];
         $descriptionAnimal =  $animal_modify['Description_animal'];
-        $typeRegime=  $animal_modify['Type_alimentaire'];
+        $typeRegime =  $animal_modify['Type_alimentaire'];
     } catch (Exception $e) {
         print('Erreur de connexion à la base de données.');
     }
@@ -136,8 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                         href="index.php">
                         <span class="material-symbols-outlined text-text-light dark:text-text-dark"
                             style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                        <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Tableau
-                            de bord</span>
+                        <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Accueil </span>
                     </a>
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30"
                         href="gestion_des_animaux.php">
@@ -165,14 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                     </a>
                 </nav>
             </div>
-            <div class="flex flex-col gap-2">
-                <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-                    href="#">
-                    <span class="material-symbols-outlined text-text-light dark:text-text-dark">settings</span>
-                    <span
-                        class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Paramètres</span>
-                </a>
-            </div>
+
         </aside>
         <div class="flex-1 flex flex-col">
 
@@ -324,7 +321,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                                 <select name="type-regime"
                                     class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 pr-10 text-base font-normal focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:focus:border-accent"
                                     id="diet">
-                                    <option value=""  disabled>Sélectionnez un régime</option>
+                                    <option value="" disabled>Sélectionnez un régime</option>
                                     <option value="carnivore" <?= (isset($typeRegime) && $typeRegime == 'carnivore') ? 'selected' : '' ?>>Carnivore</option>
                                     <option value="herbivore" <?= (isset($typeRegime) && $typeRegime == 'herbivore') ? 'selected' : '' ?>>Herbivore</option>
                                     <option value="omnivore" <?= (isset($typeRegime) && $typeRegime == 'omnivore') ? 'selected' : '' ?>>Omnivore</option>
@@ -341,7 +338,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                                 <select name="idHab"
                                     class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 pr-10 text-base font-normal focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:focus:border-accent"
                                     id="habitat">
-                                    <option value=""   disabled>Sélectionnez un habitat</option>
+                                    <option value="" disabled>Sélectionnez un habitat</option>
                                     <?php
                                     foreach ($array_habitat as $habitat) {
                                         $selected = (isset($idHab) && $idHab == $habitat[0]) ? 'selected' : '';
@@ -371,11 +368,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
 
                     <!-- Boutons -->
                     <div class="mt-6 flex flex-col-reverse items-center gap-4 border-t border-gray-200 pt-6 dark:border-gray-700 md:col-span-2 md:flex-row md:justify-end">
-                        <button id="annuler-animal"
-                            class="h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-transparent px-6 text-base font-bold text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 md:w-auto"
-                            type="button">
-                            Annuler
-                        </button>
+                        <form action="">
+                            <button id="annuler-animal"
+                                class="h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-transparent px-6 text-base font-bold text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 md:w-auto"
+                                type="button">
+                                Annuler
+                            </button>
+                        </form>
                         <button id="enregistrer-animal"
                             class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:bg-accent dark:text-primary dark:hover:bg-accent/90 dark:focus:ring-accent/50 md:w-auto"
                             type="submit">

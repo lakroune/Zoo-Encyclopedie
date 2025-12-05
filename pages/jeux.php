@@ -102,8 +102,7 @@ $succes = $array_jeux[rand(0, 2)];
               href="index.php">
               <span class="material-symbols-outlined text-text-light dark:text-text-dark"
                 style="font-variation-settings: 'FILL' 1;">dashboard</span>
-              <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Tableau
-                de bord</span>
+              <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Accueil </span>
             </a>
             <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30" href="gestion_des_animaux.php">
               <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
@@ -129,12 +128,7 @@ $succes = $array_jeux[rand(0, 2)];
             </a>
           </nav>
         </div>
-        <div class="flex flex-col gap-2">
-          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20" href="#">
-            <span class="material-symbols-outlined text-text-light dark:text-text-dark">settings</span>
-            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Paramètres</span>
-          </a>
-        </div>
+
       </aside>
       <main>
         <h1 class="tracking-light text-[32px] font-bold leading-tight px-4 text-center pb-3 pt-6 text-text-light dark:text-text-dark">Devine l’image de l’animal parmi les 3 images</h1>

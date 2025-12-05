@@ -22,7 +22,7 @@ $Description_animal = $animal["Description_animal"] ? $animal["Description_anima
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Tableau de bord — Zoo Manager</title>
+    <title>Accueil    — Zoo Manager</title>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -94,7 +94,7 @@ $Description_animal = $animal["Description_animal"] ? $animal["Description_anima
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 transition"
                         href="index.php">
                         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                        <span class="text-sm font-semibold">Tableau de bord</span>
+                        <span class="text-sm font-semibold">Accueil  </span>
                     </a>
 
                     <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20"
@@ -123,13 +123,7 @@ $Description_animal = $animal["Description_animal"] ? $animal["Description_anima
                 </nav>
             </div>
 
-            <div class="flex flex-col gap-2">
-                <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 transition"
-                    href="#">
-                    <span class="material-symbols-outlined">settings</span>
-                    <span class="text-sm font-semibold">Paramètres</span>
-                </a>
-            </div>
+            
 
         </aside>
 

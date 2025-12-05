@@ -98,8 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
           <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20" href="index.php">
             <span class="material-symbols-outlined text-text-light dark:text-text-dark"
               style="font-variation-settings: 'FILL' 1;">dashboard</span>
-            <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Tableau
-              de bord</span>
+            <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Accueil </span>
           </a>
           <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
             href="gestion_des_animaux.php">
@@ -128,14 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
           </a>
         </nav>
       </div>
-      <div class="flex flex-col gap-2">
-        <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
-          href="#">
-          <span class="material-symbols-outlined text-text-light dark:text-text-dark">settings</span>
-          <span
-            class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Paramètres</span>
-        </a>
-      </div>
+
     </aside>
     <div class="flex-1 flex flex-col">
 
@@ -287,11 +279,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idHab'])) {
 
               <!-- Boutons -->
               <div class="flex flex-col-reverse sm:flex-row gap-3 justify-end p-6 bg-background-light dark:bg-background-dark border-t border-border-light dark:border-border-dark rounded-b-xl">
-                <button type="button"
-                  id="annuler-habitat"
-                  class="h-12 px-6 rounded-lg bg-transparent border border-border-light dark:border-border-dark text-text-light dark:text-text-dark font-bold hover:bg-primary/10 dark:hover:bg-primary/20 transition">
-                  Annuler
-                </button>
+                <form action="">
+                  <button type="button"
+                    id="annuler-habitat"
+                    class="h-12 px-6 rounded-lg bg-transparent border border-border-light dark:border-border-dark text-text-light dark:text-text-dark font-bold hover:bg-primary/10 dark:hover:bg-primary/20 transition">
+                    Annuler
+                  </button>
+                </form>
                 <button type="submit"
                   class="h-12 px-6 rounded-lg bg-primary text-white font-bold hover:opacity-90 flex items-center gap-2 transition">
                   <span class="material-symbols-outlined text-xl">save</span>
