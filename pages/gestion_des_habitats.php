@@ -3,6 +3,11 @@ include "db_connect.php";
 
 $action = "php/ajouter_habitat.php";
 
+
+$sql = " select * from  habitat";
+$resultat = $cennect->query($sql);
+$array_habitat = $resultat->fetch_all();
+
 $hidden = "hidden";
 $nameHab = "";
 $descriptionHab = '';

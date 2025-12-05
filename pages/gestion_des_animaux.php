@@ -3,6 +3,10 @@ include "db_connect.php";
 
 
 $action = "php/ajouter_animal.php";
+$sql = " select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a join habitat as h where  a.IdHab=h.IdHab";
+$resultat = $cennect->query($sql);
+
+$array_animal = $resultat->fetch_all();
 
 $hidden = "hidden";
 $NomAnimal = "";
@@ -296,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST["search"]) || isset($
                             <input name="nomAnimal"
                                 class="h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-background-light px-4 text-base font-normal placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-background-dark dark:text-primary-light dark:placeholder:text-gray-400 dark:focus:border-accent"
                                 id="animal-name" placeholder="Par exemple, Léo le Lion"
-                                value="<?= htmlspecialchars($NomAnimal ?? ''); ?>" />
+                                value="<?= $NomAnimal; ?>" />
                         </label>
                     </div>
 

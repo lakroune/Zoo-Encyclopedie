@@ -12,14 +12,5 @@ if ($cennect->connect_error) {
 
 
 
-$sql = " select * from  habitat";
-$resultat = $cennect->query($sql);
-$array_habitat = $resultat->fetch_all();
-
-
-$sql = " select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab,a.Url_image from animal as a join habitat as h where  a.IdHab=h.IdHab";
-$resultat = $cennect->query($sql);
-
-$array_animal = $resultat->fetch_all();
 
 ?>
