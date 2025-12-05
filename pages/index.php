@@ -1,3 +1,21 @@
+<?php
+
+
+include "db_connect.php";
+
+$sql = " select a.IdAnimal ,a.Description_animal,a.NomAnimal, a.Type_alimentaire ,h.NomHab
+,a.Url_image from animal as a join habitat as h where  a.IdHab=h.IdHab order by rand() limit 1";
+$resultat = $cennect->query($sql);
+$animal = $resultat->fetch_assoc();
+$NomAnimal = $animal["NomAnimal"] ? $animal["NomAnimal"] : "";
+$Type_alimentaire = $animal["Type_alimentaire"] ? $animal["Type_alimentaire"] : "";
+$NomHab = $animal["NomHab"] ? $animal["NomHab"] : "";
+$Url_image = $animal["Url_image"] ? $animal["Url_image"] : "";
+$Description_animal = $animal["Description_animal"] ? $animal["Description_animal"] : "";
+
+?>
+
+
 <!DOCTYPE html>
 <html class="light" lang="fr">
 
@@ -126,10 +144,11 @@
                         <h1 class="text-3xl font-bold">En savoir plus sur cet animal</h1>
 
                         <div class="flex items-center gap-4">
-                            <a class="flex items-center justify-center gap-2 rounded-lg h-11 px-4 border border-border-light dark:border-border-dark font-bold hover:bg-border-light dark:hover:bg-border-dark transition"
-                                href="#">
-                                <span class="truncate">Suivant</span>
-                            </a>
+                            <form action="">
+                                <button class="flex items-center justify-center gap-2 rounded-lg h-11 px-4 border border-border-light dark:border-border-dark font-bold hover:bg-border-light dark:hover:bg-border-dark transition">
+                                    <span class="truncate">Suivant</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
 
@@ -137,14 +156,14 @@
 
                         <!-- IMAGE -->
                         <div class="lg:col-span-3 w-full aspect-[4/3] bg-center bg-cover rounded-xl shadow-md"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDt4bmvq3inZr07QGny_54MVEUuMbSaSzy3h3pEFwZrnOCIU2dn-TrhGvYxnDpSftygvtTa8GGBqUQ0ABGNnp9px-MBQKZIQaRrvbixDy2VIX368jYTAD1gZGDA79xJ-6Pk-B6VVQPUDq9YzrQc4ow2RARCsRnp0tX-xxFde0LQ416bGY5aenHXngzton-nJMq9a_IoFhXFLO5AjporDXH8hgI1mpTC8db3SG1okRkwdJgDdt8f24z1eQAc5rsAM9j_5pSefsxJitE");'>
+                            style='background-image: url("images/<?= $Url_image ?>");'>
                         </div>
 
                         <!-- INFO -->
                         <div class="lg:col-span-2 flex flex-col gap-6">
 
                             <div class="flex items-start justify-between">
-                                <h2 class="text-4xl md:text-5xl font-black">Lion d’Afrique</h2>
+                                <h2 class="text-3xl md:text-3xl font-black"><?= $NomAnimal ?></h2>
 
                                 <button class="flex items-center justify-center h-10 w-10 rounded-full bg-primary/20 hover:bg-primary/30 transition">
                                     <span class="material-symbols-outlined">volume_up</span>
@@ -160,7 +179,7 @@
                                     </div>
                                     <div>
                                         <h3 class="font-bold">Type alimentaire</h3>
-                                        <p class="text-text-muted-light dark:text-text-muted-dark">Carnivore</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark"><?= $Type_alimentaire ?></p>
                                     </div>
                                 </div>
 
@@ -171,7 +190,7 @@
                                     </div>
                                     <div>
                                         <h3 class="font-bold">Habitat assigné</h3>
-                                        <p class="text-primary hover:underline" href="#">Savane africaine</p>
+                                        <p class="text-primary hover:underline" href="#"><?= $NomHab ?></p>
                                     </div>
                                 </div>
 
@@ -181,10 +200,7 @@
                             <div class="flex flex-col gap-3">
                                 <h3 class="font-bold text-lg">Description</h3>
                                 <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">
-                                    Le lion d’Afrique est l’un des plus grands félins du monde.
-                                    Reconnaissable à la crinière imposante du mâle, il vit en groupes sociaux appelés
-                                    « troupes ». C’est un prédateur redoutable qui chasse principalement des grands
-                                    mammifères tels que les zèbres et les gnous.
+                                    <?= $Description_animal ?>
                                 </p>
                             </div>
 
@@ -201,7 +217,7 @@
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
                         <a class="flex flex-col items-center justify-center gap-4 rounded-xl border bg-foreground-light p-6 text-center hover:shadow-lg transition dark:bg-foreground-dark"
-                            href="#">
+                            href="./gestion_des_animaux.php">
                             <div class="flex size-16 items-center justify-center rounded-xl bg-primary/20">
                                 <span class="material-symbols-outlined text-3xl">pets</span>
                             </div>
@@ -209,7 +225,7 @@
                         </a>
 
                         <a class="flex flex-col items-center justify-center gap-4 rounded-xl border bg-foreground-light p-6 text-center hover:shadow-lg transition dark:bg-foreground-dark"
-                            href="#">
+                            href="./gestion_des_habitats.php">
                             <div class="flex size-16 items-center justify-center rounded-xl bg-primary/20">
                                 <span class="material-symbols-outlined text-3xl">eco</span>
                             </div>
@@ -217,7 +233,7 @@
                         </a>
 
                         <a class="flex flex-col items-center justify-center gap-4 rounded-xl border bg-foreground-light p-6 text-center hover:shadow-lg transition dark:bg-foreground-dark"
-                            href="#">
+                            href="./Statistiques.php">
                             <div class="flex size-16 items-center justify-center rounded-xl bg-primary/20">
                                 <span class="material-symbols-outlined text-3xl">bar_chart</span>
                             </div>
@@ -225,7 +241,7 @@
                         </a>
 
                         <a class="flex flex-col items-center justify-center gap-4 rounded-xl border bg-primary p-6 text-center text-white hover:opacity-90 transition"
-                            href="#">
+                            href="./jeux.php">
                             <div class="flex size-16 items-center justify-center rounded-xl bg-white/30">
                                 <span class="material-symbols-outlined text-3xl">joystick</span>
                             </div>
