@@ -2,13 +2,23 @@
 
 include "db_connect.php";
 
- 
+$score = 0;
+$foix_jeux = 0;
+if ($_SERVER['REQUEST_METHOD'] === "POST"  && isset($_POST['success'], $_POST['choix'])) {
+  if ((int)$_POST['success'] === (int) $_POST['choix']) {
+    $score = (int)$_POST['score'] + 1;
+  } else   $score = (int)$_POST['score'];
+  $foix_jeux = (int)$_POST['foix_jeux'] + 1;
+}
 
 $sql = " select a.IdAnimal ,a.NomAnimal, a.Type_alimentaire ,h.NomHab
 ,a.Url_image from animal as a join habitat as h where  a.IdHab=h.IdHab order by rand() limit 3";
 $resultat = $cennect->query($sql);
 
- 
+$array_jeux = $resultat->fetch_all();
+$succes = $array_jeux[rand(0, 2)];
+
+
 
 ?>
 
@@ -135,9 +145,19 @@ $resultat = $cennect->query($sql);
           </button>
         </div>
         <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-4 p-4">
-           
+          <?php foreach ($array_jeux as $jeux) { ?>
+            <form action="" method="POST">
+              <input type="hidden" value="<?= $succes[0] ?>" name="success">
+              <input type="hidden" value="<?= $jeux[0] ?>" name="choix">
+              <input type="hidden" value="<?= $foix_jeux ?>" name="foix_jeux">
+              <input type="hidden" value="<?= $score ?>" name="score">
+              <div class="flex flex-col gap-3 group" onclick="this.closest('form').submit()">
+                <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl shadow-primary/30" data-alt="A majestic wolf howling at the moon" style='background-image: url("images/<?= $jeux[4] ?>");'></div>
+              </div>
 
-        
+            </form>
+
+          <?php } ?>
 
         </div>
         <div class="flex flex-col gap-3 p-4">
